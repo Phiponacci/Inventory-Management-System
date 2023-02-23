@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TS.EasyStockManager.Core.Repository;
@@ -28,6 +29,7 @@ namespace TS.EasyStockManager.Repository.User
         }
         public async Task<bool> Login(string email, string password)
         {
+            Console.WriteLine(dbContext.User.Count());
             return await dbContext.User.AnyAsync(x => x.Email == email && x.Password == password);
         }
     }
