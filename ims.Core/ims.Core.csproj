@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ims.Data\ims.Data.csproj" />
+    <ProjectReference Include="..\ims.Model\ims.Model.csproj" />
+  </ItemGroup>
+
+</Project>

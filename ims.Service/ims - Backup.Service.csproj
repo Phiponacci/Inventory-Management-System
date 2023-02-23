@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ims.Common\ims.Common.csproj" />
+    <ProjectReference Include="..\ims.Core\ims.Core.csproj" />
+    <ProjectReference Include="..\ims.Model\ims.Model.csproj" />
+    <ProjectReference Include="..\ims.Repository\ims.Repository.csproj" />
+    <ProjectReference Include="..\ims.UnitOfWork\ims.UnitOfWork.csproj" />
+  </ItemGroup>
+
+</Project>
