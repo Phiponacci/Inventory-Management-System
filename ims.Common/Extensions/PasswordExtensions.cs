@@ -7,6 +7,7 @@ namespace ims.Common.Extensions
 {
     public static class PasswordExtensions
     {
+        // sha-256
         public static string MD5Hash(this string text)
         {
             MD5 md5 = new MD5CryptoServiceProvider();

@@ -50,14 +50,12 @@ namespace ims.Web.Controllers
                 }
                 else
                 {
-                    Console.WriteLine(result.UserMessage);
                     jsonResultModel.IsSucceeded = false;
                     jsonResultModel.UserMessage = result.UserMessage;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
                 jsonResultModel.IsSucceeded = false;
                 jsonResultModel.UserMessage = ex.Message;
             }
