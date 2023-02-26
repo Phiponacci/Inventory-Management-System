@@ -12,25 +12,24 @@ namespace ims.Repository.User
 {
     public class UserRepository : Repository<ims.Data.Entity.User>, IUserRepository
     {
-        private EasyStockManagerDbContext dbContext { get => _context as EasyStockManagerDbContext; }
+        private AppDbContext dbContext { get => _context as AppDbContext; }
 
         public UserRepository(DbContext context) : base(context)
         {
         }
 
-        public async Task<bool> EmailValidationCreateUser(string email)
+        public async Task<bool> UserNameValidationCreateUser(string username)
         {
-            return await dbContext.User.AnyAsync(x => x.Email == email);
+            return await dbContext.User.AnyAsync(x => x.UserName == username);
         }
 
-        public async Task<bool> EmailValidationUpdateUser(string email, int Id)
+        public async Task<bool> UserNameValidationUpdateUser(string username, int Id)
         {
-            return await dbContext.User.AnyAsync(x => x.Email == email && x.Id != Id);
+            return await dbContext.User.AnyAsync(x => x.UserName == username && x.Id != Id);
         }
-        public async Task<bool> Login(string email, string password)
+        public async Task<bool> Login(string username, string password)
         {
-            Console.WriteLine(dbContext.User.Count());
-            return await dbContext.User.AnyAsync(x => x.Email == email && x.Password == password);
+            return await dbContext.User.AnyAsync(x => x.UserName == username && x.PasswordHash == password);
         }
     }
 }

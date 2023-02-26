@@ -11,7 +11,7 @@ namespace ims.Repository.StoreStock
 {
     public class StoreStockRepository : Repository<ims.Data.Entity.StoreStock>, IStoreStockRepository
     {
-        private EasyStockManagerDbContext dbContext { get => _context as EasyStockManagerDbContext; }
+        private AppDbContext dbContext { get => _context as AppDbContext; }
         public StoreStockRepository(DbContext context) : base(context)
         {
         }

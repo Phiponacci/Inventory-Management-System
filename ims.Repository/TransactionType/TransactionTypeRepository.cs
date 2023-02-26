@@ -10,7 +10,7 @@ namespace ims.Repository.TransactionType
 {
     public class TransactionTypeRepository : Repository<ims.Data.Entity.TransactionType>, ITransactionTypeRepository
     {
-        private EasyStockManagerDbContext dbContext { get => _context as EasyStockManagerDbContext; }
+        private AppDbContext dbContext { get => _context as AppDbContext; }
         public TransactionTypeRepository(DbContext context) : base(context)
         {
         }

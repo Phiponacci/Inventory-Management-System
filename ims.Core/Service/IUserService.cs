@@ -9,6 +9,6 @@ namespace ims.Core.Service
 {
     public interface IUserService : IService<UserDTO>
     {
-        Task<ServiceResult> Login(string email, string password);
+        Task<ServiceResult> Login(string userName, string password);
     }
 }

@@ -5,16 +5,15 @@ using System.Collections.Generic;
 using System.Text;
 using ims.Data.Entity;
 
-namespace ims.Data.Configurations
+namespace ims.Data.Configurations;
+
+internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
-    internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public void Configure(EntityTypeBuilder<Category> builder)
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
-        {
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).UseIdentityColumn();
-            builder.Property(x => x.CategoryName).IsRequired().HasMaxLength(30);
-            builder.ToTable("Category");
-        }
+        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).UseIdentityColumn();
+        builder.Property(x => x.CategoryName).IsRequired().HasMaxLength(30);
+        builder.ToTable("Category");
     }
 }

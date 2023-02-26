@@ -10,7 +10,7 @@ namespace ims.Repository.Store
 {
     public class StoreRepository : Repository<ims.Data.Entity.Store>, IStoreRepository
     {
-        private EasyStockManagerDbContext dbContext { get => _context as EasyStockManagerDbContext; }
+        private AppDbContext dbContext { get => _context as AppDbContext; }
 
         public StoreRepository(DbContext context) : base(context)
         {

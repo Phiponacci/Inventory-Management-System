@@ -8,25 +8,32 @@ namespace ims.Model.ViewModel.User
 {
     public class EditUserViewModel : BaseViewModel
     {
-        [Required]
         [MaxLength(50)]
         [Display]
         [EmailAddress]
         public string Email { get; set; }
 
-   
+        [Required]
+        [MaxLength(50)]
+        [Display]
+        public string UserName { get; set; }
+
+
         [MaxLength(18)]
         [Display]
         public string Password { get; set; }
 
-        [Required]
         [MaxLength(30)]
         [Display]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
 
-        [Required]
         [MaxLength(30)]
         [Display]
-        public string Surname { get; set; }
+        public string LastName { get; set; }
+
+        [MaxLength(30)]
+        [Display]
+        public string PhoneNumber { get; set; }
+
     }
 }

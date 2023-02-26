@@ -10,7 +10,7 @@ namespace ims.Repository.Category
 {
     public class CategoryRepository : Repository<ims.Data.Entity.Category>, ICategoryRepository
     {
-        private EasyStockManagerDbContext dbContext { get => _context as EasyStockManagerDbContext; }
+        private AppDbContext dbContext { get => _context as AppDbContext; }
 
         public CategoryRepository(DbContext context) : base(context)
         {

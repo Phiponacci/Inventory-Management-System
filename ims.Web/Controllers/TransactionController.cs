@@ -73,9 +73,8 @@ namespace ims.Web.Controllers
 
         public async Task<IActionResult> Edit(int id, int typeId)
         {
-            EditTransactionViewModel model = new EditTransactionViewModel();
             var serviceResult = await _transactionService.GetWithDetailAndProductById(id);
-            model = _mapper.Map<EditTransactionViewModel>(serviceResult.TransactionResult);
+            var model = _mapper.Map<EditTransactionViewModel>(serviceResult.TransactionResult);
             model.StoreList = await GetStoreList();
             model.PageName = GetPageName(typeId);
             if (typeId == (int)TransactionType.Transfer)
@@ -97,7 +96,7 @@ namespace ims.Web.Controllers
                 if (jsonResultModel.IsSucceeded)
                 {
                     jsonResultModel.IsRedirect = true;
-                    jsonResultModel.RedirectUrl = "/Transaction"; 
+                    jsonResultModel.RedirectUrl = "/Transaction";
                 }
             }
             catch (Exception ex)

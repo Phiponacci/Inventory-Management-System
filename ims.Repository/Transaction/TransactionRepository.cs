@@ -11,7 +11,7 @@ namespace ims.Repository.Transaction
 {
     public class TransactionRepository : Repository<ims.Data.Entity.Transaction>, ITransactionRepository
     {
-        private EasyStockManagerDbContext dbContext { get => _context as EasyStockManagerDbContext; }
+        private AppDbContext dbContext { get => _context as AppDbContext; }
         public TransactionRepository(DbContext context) : base(context)
         {
         }

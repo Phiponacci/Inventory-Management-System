@@ -37,10 +37,10 @@ namespace ims.Web.Controllers
             JsonResultModel jsonResultModel = new JsonResultModel();
             try
             {
-                ServiceResult result = await _userService.Login(model.Email, model.Password);
+                ServiceResult result = await _userService.Login(model.UserName, model.Password);
                 if (result.IsSucceeded)
                 {
-                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, model.Email) };
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, model.UserName) };
                     var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);

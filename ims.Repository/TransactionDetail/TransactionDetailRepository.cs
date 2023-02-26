@@ -12,7 +12,7 @@ namespace ims.Repository.TransactionDetail
 {
     public class TransactionDetailRepository : Repository<ims.Data.Entity.TransactionDetail>, ITransactionDetailRepository
     {
-        private EasyStockManagerDbContext dbContext { get => _context as EasyStockManagerDbContext; }
+        private AppDbContext dbContext { get => _context as AppDbContext; }
         public TransactionDetailRepository(DbContext context) : base(context)
         {
         }

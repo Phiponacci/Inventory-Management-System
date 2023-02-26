@@ -7,8 +7,8 @@ namespace ims.Model.ViewModel.User
 {
     public class ListUserViewModel : BaseViewModel
     {
-        public string Email { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string UserName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }

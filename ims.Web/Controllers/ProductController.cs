@@ -81,9 +81,8 @@ namespace ims.Web.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            EditProductViewModel model = new EditProductViewModel();
             var serviceResult = await _productService.GetById(id);
-            model = _mapper.Map<EditProductViewModel>(serviceResult.TransactionResult);
+            var model = _mapper.Map<EditProductViewModel>(serviceResult.TransactionResult);
             model.CategoryList = await GetCategoryList();
             model.UnitOfMeasureList = await GetUnitOfMeasureList();
 

@@ -20,11 +20,11 @@ namespace ims.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWorks
     {
-        private readonly EasyStockManagerDbContext _context;
+        private readonly AppDbContext _context;
         private IDbContextTransaction _transaction;
         private bool _disposed = false;
 
-        public UnitOfWork(EasyStockManagerDbContext easyStockManagerDbContext)
+        public UnitOfWork(AppDbContext easyStockManagerDbContext)
         {
             _context = easyStockManagerDbContext;
         }

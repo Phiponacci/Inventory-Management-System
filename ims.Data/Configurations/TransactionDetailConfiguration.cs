@@ -5,15 +5,14 @@ using System.Collections.Generic;
 using System.Text;
 using ims.Data.Entity;
 
-namespace ims.Data.Configurations
+namespace ims.Data.Configurations;
+
+internal class TransactionDetailConfiguration : IEntityTypeConfiguration<TransactionDetail>
 {
-    internal class TransactionDetailConfiguration : IEntityTypeConfiguration<TransactionDetail>
+    public void Configure(EntityTypeBuilder<TransactionDetail> builder)
     {
-        public void Configure(EntityTypeBuilder<TransactionDetail> builder)
-        {
-            builder.HasKey(x => new { x.TransactionId, x.ProductId });
-            builder.Property(x => x.Amount).HasColumnType("decimal(18,2)");
-            builder.ToTable("TransactionDetail");
-        }
+        builder.HasKey(x => new { x.TransactionId, x.ProductId });
+        builder.Property(x => x.Amount).HasColumnType("decimal(18,2)");
+        builder.ToTable("TransactionDetail");
     }
 }

@@ -11,8 +11,7 @@ namespace ims.Model.ViewModel.Auth
         [Required]
         [MaxLength(50)]
         [Display]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [MaxLength(18)]

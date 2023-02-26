@@ -26,12 +26,12 @@ namespace ims.Service.User
             {
                 using (_unitOfWork)
                 {
-                    bool emailValidation = await _unitOfWork.UserRepository.EmailValidationCreateUser(model.Email);
+                    bool emailValidation = await _unitOfWork.UserRepository.UserNameValidationCreateUser(model.Email);
 
                     if (!emailValidation)
                     {
                         Entity.User entity = _mapper.Map<Data.Entity.User>(model);
-                        entity.Password = model.Password.MD5Hash();
+                        entity.PasswordHash = model.Password.MD5Hash();
                         entity.CreateDate = DateTime.Now;
                         await _unitOfWork.UserRepository.AddAsync(entity);
                         await _unitOfWork.SaveAsync();
@@ -62,9 +62,9 @@ namespace ims.Service.User
                 {
                     IEnumerable<Entity.User> list = await _unitOfWork
                                                                 .UserRepository
-                                                                .FindAsync(filter: x => (string.IsNullOrEmpty(criteria.Email) || x.Email.Contains(criteria.Email)) &&
-                                                                                        (string.IsNullOrEmpty(criteria.Name) || x.Name.Contains(criteria.Name)) &&
-                                                                                        (string.IsNullOrEmpty(criteria.Surname) || x.Surname.Contains(criteria.Surname)),
+                                                                .FindAsync(filter: x => (string.IsNullOrEmpty(criteria.UserName) || x.UserName.Contains(criteria.UserName)) &&
+                                                                                        (string.IsNullOrEmpty(criteria.FirstName) || x.FirstName.Contains(criteria.FirstName)) &&
+                                                                                        (string.IsNullOrEmpty(criteria.LastName) || x.LastName.Contains(criteria.LastName)),
                                                                            orderByDesc: x => x.Id,
                                                                            skip: criteria.PageNumber,
                                                                            take: criteria.RecordCount);
@@ -88,8 +88,8 @@ namespace ims.Service.User
                 {
                     int count = await _unitOfWork.UserRepository
                                                   .FindCountAsync(filter: x => (string.IsNullOrEmpty(criteria.Email) || x.Email.Contains(criteria.Email)) &&
-                                                                               (string.IsNullOrEmpty(criteria.Name) || x.Name.Contains(criteria.Name)) &&
-                                                                               (string.IsNullOrEmpty(criteria.Surname) || x.Surname.Contains(criteria.Surname)));
+                                                                               (string.IsNullOrEmpty(criteria.FirstName) || x.FirstName.Contains(criteria.FirstName)) &&
+                                                                               (string.IsNullOrEmpty(criteria.LastName) || x.LastName.Contains(criteria.LastName)));
 
                     result.TransactionResult = count;
                 }
@@ -138,14 +138,14 @@ namespace ims.Service.User
             }
             return result;
         }
-        public async Task<ServiceResult> Login(string email, string password)
+        public async Task<ServiceResult> Login(string userName, string password)
         {
             ServiceResult result = new ServiceResult();
             try
             {
                 using (_unitOfWork)
                 {
-                    bool login = await _unitOfWork.UserRepository.Login(email, password.MD5Hash());
+                    bool login = await _unitOfWork.UserRepository.Login(userName, password.MD5Hash());
                     if (login)
                         result.IsSucceeded = true;
                     else
@@ -183,7 +183,7 @@ namespace ims.Service.User
         }
         public async Task<ServiceResult> Update(UserDTO model)
         {
-            ServiceResult result = new ServiceResult();
+            ServiceResult result = new();
             try
             {
                 using (_unitOfWork)
@@ -191,18 +191,15 @@ namespace ims.Service.User
                     Entity.User entity = await _unitOfWork.UserRepository.GetByIdAsync(model.Id.Value);
                     if (entity != null)
                     {
-                        bool emailValidation = await _unitOfWork.UserRepository.EmailValidationUpdateUser(model.Email, model.Id.Value);
+                        bool userNameValidation = await _unitOfWork.UserRepository.UserNameValidationUpdateUser(model.UserName, model.Id.Value);
 
-                        if (!emailValidation)
+                        if (!userNameValidation)
                         {
-
-                            string oldPassword = entity.Password;
                             if (!string.IsNullOrEmpty(model.Password))
-                                model.Password = model.Password.MD5Hash();
-                            else
-                                model.Password = oldPassword;
+                                entity.PasswordHash = model.Password.MD5Hash();
 
                             _mapper.Map(model, entity);
+
                             _unitOfWork.UserRepository.Update(entity);
 
                             await _unitOfWork.SaveAsync();

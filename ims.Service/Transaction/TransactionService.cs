@@ -65,7 +65,7 @@ namespace ims.Service.Transaction
                         else
                             storeStock.Stock += transactionDetailItem.Amount.Value;
 
-                        if (storeStockIsUpdate == false)
+                        if (!storeStockIsUpdate)
                             await _unitOfWork.StoreStockRepository.AddAsync(storeStock);
 
                         if (model.TransactionTypeId == (int)TransactionType.Transfer && model.ToStoreId.HasValue)
@@ -81,7 +81,7 @@ namespace ims.Service.Transaction
                             }
 
                             storeStockTransfer.Stock += transactionDetailItem.Amount.Value;
-                            if (storeStockTransferIsUpdate == false)
+                            if (!storeStockTransferIsUpdate)
                                 await _unitOfWork.StoreStockRepository.AddAsync(storeStockTransfer);
                         }
                     }
@@ -337,7 +337,7 @@ namespace ims.Service.Transaction
                             else
                                 storeStock.Stock += transactionDetailItem.Amount.Value;
 
-                            if (storeStockIsUpdate == false)
+                            if (!storeStockIsUpdate)
                                 await _unitOfWork.StoreStockRepository.AddAsync(storeStock);
 
                             if (model.TransactionTypeId == (int)TransactionType.Transfer && model.ToStoreId.HasValue)
@@ -353,7 +353,7 @@ namespace ims.Service.Transaction
                                 }
 
                                 storeStockTransfer.Stock += transactionDetailItem.Amount.Value;
-                                if (storeStockTransferIsUpdate == false)
+                                if (!storeStockTransferIsUpdate)
                                     await _unitOfWork.StoreStockRepository.AddAsync(storeStockTransfer);
                             }
                         }

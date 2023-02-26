@@ -5,16 +5,15 @@ using System.Collections.Generic;
 using System.Text;
 using ims.Data.Entity;
 
-namespace ims.Data.Configurations
+namespace ims.Data.Configurations;
+
+internal class UnitOfMeasureConfiguration : IEntityTypeConfiguration<UnitOfMeasure>
 {
-    internal class UnitOfMeasureConfiguration : IEntityTypeConfiguration<UnitOfMeasure>
+    public void Configure(EntityTypeBuilder<UnitOfMeasure> builder)
     {
-        public void Configure(EntityTypeBuilder<UnitOfMeasure> builder)
-        {
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).UseIdentityColumn();
-            builder.Property(x => x.UnitOfMeasureName).IsRequired().HasMaxLength(30);
-            builder.Property(x => x.Isocode).IsRequired().HasMaxLength(3);
-        }
+        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).UseIdentityColumn();
+        builder.Property(x => x.UnitOfMeasureName).IsRequired().HasMaxLength(30);
+        builder.Property(x => x.Isocode).IsRequired().HasMaxLength(3);
     }
 }
