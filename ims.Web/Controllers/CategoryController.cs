@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -9,129 +8,130 @@ using ims.Model.Domain;
 using ims.Model.Service;
 using ims.Model.ViewModel.Category;
 using ims.Model.ViewModel.JsonResult;
+using ims.Security;
+using ims.Common.Enums;
 
-namespace ims.Web.Controllers
+namespace ims.Web.Controllers;
+
+
+public class CategoryController : Controller
 {
-    public class CategoryController : Controller
+    private readonly ICategoryService _categoryService;
+    private readonly IMapper _mapper;
+
+    public CategoryController(ICategoryService categoryService,
+                              IMapper mapper)
     {
+        _categoryService = categoryService;
+        _mapper = mapper;
+    }
 
-        private readonly ICategoryService _categoryService;
-        private readonly IMapper _mapper;
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-        public CategoryController(ICategoryService categoryService,
-                                  IMapper mapper)
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken()]
+    public async Task<IActionResult> Create(CreateCategoryViewModel model)
+    {
+        JsonResultModel jsonResultModel = new JsonResultModel();
+        try
         {
-            _categoryService = categoryService;
-            _mapper = mapper;
+            CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(model);
+            var serviceResult = await _categoryService.AddAsync(categoryDTO);
+            jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
         }
-
-        public IActionResult Index()
+        catch (Exception ex)
         {
-            return View();
+            jsonResultModel.IsSucceeded = false;
+            jsonResultModel.UserMessage = ex.Message;
         }
+        return Json(jsonResultModel);
+    }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+    public async Task<IActionResult> Edit(int id)
+    {
+        var serviceResult = await _categoryService.GetById(id);
+        EditCategoryViewModel model = _mapper.Map<EditCategoryViewModel>(serviceResult.TransactionResult);
+        return View(model);
+    }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken()]
-        public async Task<IActionResult> Create(CreateCategoryViewModel model)
+    [HttpPost]
+    [ValidateAntiForgeryToken()]
+    public async Task<IActionResult> Edit(EditCategoryViewModel model)
+    {
+        JsonResultModel jsonResultModel = new JsonResultModel();
+        try
         {
-            JsonResultModel jsonResultModel = new JsonResultModel();
-            try
+            CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(model);
+            var serviceResult = await _categoryService.Update(categoryDTO);
+            jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
+            if (jsonResultModel.IsSucceeded)
             {
-                CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(model);
-                var serviceResult = await _categoryService.AddAsync(categoryDTO);
-                jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
+                jsonResultModel.IsRedirect = true;
+                jsonResultModel.RedirectUrl = "/Category";
             }
-            catch (Exception ex)
-            {
-                jsonResultModel.IsSucceeded = false;
-                jsonResultModel.UserMessage = ex.Message;
-            }
-            return Json(jsonResultModel);
         }
-
-        public async Task<IActionResult> Edit(int id)
+        catch (Exception ex)
         {
-            var serviceResult = await _categoryService.GetById(id);
-            EditCategoryViewModel model = _mapper.Map<EditCategoryViewModel>(serviceResult.TransactionResult);
-            return View(model);
+            jsonResultModel.IsSucceeded = false;
+            jsonResultModel.UserMessage = ex.Message;
         }
+        return Json(jsonResultModel);
+    }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken()]
-        public async Task<IActionResult> Edit(EditCategoryViewModel model)
+    [HttpGet]
+    public async Task<IActionResult> List(SearchCategoryViewModel model)
+    {
+        JsonDataTableModel jsonDataTableModel = new JsonDataTableModel();
+        try
         {
-            JsonResultModel jsonResultModel = new JsonResultModel();
-            try
-            {
-                CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(model);
-                var serviceResult = await _categoryService.Update(categoryDTO);
-                jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
-                if (jsonResultModel.IsSucceeded)
-                {
-                    jsonResultModel.IsRedirect = true;
-                    jsonResultModel.RedirectUrl = "/Category";
-                }
-            }
-            catch (Exception ex)
-            {
-                jsonResultModel.IsSucceeded = false;
-                jsonResultModel.UserMessage = ex.Message;
-            }
-            return Json(jsonResultModel);
-        }
+            CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(model);
+            ServiceResult<int> serviceCountResult = await _categoryService.FindCount(categoryDTO);
+            ServiceResult<IEnumerable<CategoryDTO>> serviceListResult = await _categoryService.Find(categoryDTO);
 
-        [HttpGet]
-        public async Task<IActionResult> List(SearchCategoryViewModel model)
-        {
-            JsonDataTableModel jsonDataTableModel = new JsonDataTableModel();
-            try
+            if (serviceCountResult.IsSucceeded && serviceListResult.IsSucceeded)
             {
-                CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(model);
-                ServiceResult<int> serviceCountResult = await _categoryService.FindCount(categoryDTO);
-                ServiceResult<IEnumerable<CategoryDTO>> serviceListResult = await _categoryService.Find(categoryDTO);
-
-                if (serviceCountResult.IsSucceeded && serviceListResult.IsSucceeded)
-                {
-                    List<ListCategoryViewModel> listVM = _mapper.Map<List<ListCategoryViewModel>>(serviceListResult.TransactionResult);
-                    jsonDataTableModel.aaData = listVM;
-                    jsonDataTableModel.iTotalDisplayRecords = serviceCountResult.TransactionResult;
-                    jsonDataTableModel.iTotalRecords = serviceCountResult.TransactionResult;
-                }
-                else
-                {
-                    jsonDataTableModel.IsSucceeded = false;
-                    jsonDataTableModel.UserMessage = serviceCountResult.UserMessage + "-" + serviceListResult.UserMessage;
-                }
+                List<ListCategoryViewModel> listVM = _mapper.Map<List<ListCategoryViewModel>>(serviceListResult.TransactionResult);
+                jsonDataTableModel.aaData = listVM;
+                jsonDataTableModel.iTotalDisplayRecords = serviceCountResult.TransactionResult;
+                jsonDataTableModel.iTotalRecords = serviceCountResult.TransactionResult;
             }
-            catch (Exception ex)
+            else
             {
                 jsonDataTableModel.IsSucceeded = false;
-                jsonDataTableModel.UserMessage = ex.Message;
+                jsonDataTableModel.UserMessage = serviceCountResult.UserMessage + "-" + serviceListResult.UserMessage;
             }
-
-            return Json(jsonDataTableModel);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        catch (Exception ex)
         {
-            JsonResultModel jsonResultModel = new JsonResultModel();
-            try
-            {
-                ServiceResult serviceResult = await _categoryService.RemoveById(id);
-                jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
-            }
-            catch (Exception ex)
-            {
-                jsonResultModel.IsSucceeded = false;
-                jsonResultModel.UserMessage = ex.Message;
-            }
-            return Json(jsonResultModel);
+            jsonDataTableModel.IsSucceeded = false;
+            jsonDataTableModel.UserMessage = ex.Message;
         }
+
+        return Json(jsonDataTableModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        JsonResultModel jsonResultModel = new JsonResultModel();
+        try
+        {
+            ServiceResult serviceResult = await _categoryService.RemoveById(id);
+            jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
+        }
+        catch (Exception ex)
+        {
+            jsonResultModel.IsSucceeded = false;
+            jsonResultModel.UserMessage = ex.Message;
+        }
+        return Json(jsonResultModel);
     }
 }

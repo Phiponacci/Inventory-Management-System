@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ims.Data.Entity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,6 @@ namespace ims.Core.Repository
     {
         Task<bool> UserNameValidationCreateUser(string username);
         Task<bool> UserNameValidationUpdateUser(string username, int Id);
-        Task<bool> Login(string userName, string password);
+        User Login(string username, string password);
     }
 }

@@ -17,6 +17,7 @@ namespace ims.Core.UnitOfWorks
         ITransactionTypeRepository TransactionTypeRepository { get; }
         IUnitOfMeasureRepository UnitOfMeasureRepository { get; }
         IUserRepository UserRepository { get; }
+        IRoleRepository RoleRepository { get; }
         Task SaveAsync();
         void Save();
         void Commit();

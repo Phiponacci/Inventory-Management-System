@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace ims.Common.Extensions
+namespace ims.Common.Extensions;
+
+public static class PasswordExtensions
 {
-    public static class PasswordExtensions
+    public static string HashPassword(this string password)
     {
-        // sha-256
-        public static string MD5Hash(this string text)
+        using (var sha256 = SHA256.Create())
         {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
-            byte[] result = md5.Hash;
-            StringBuilder strBuilder = new StringBuilder();
-            for (int i = 0; i < result.Length; i++)
-                strBuilder.Append(result[i].ToString("x2"));
-            return strBuilder.ToString();
+            byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in hashedBytes)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+            return sb.ToString();
         }
     }
 }

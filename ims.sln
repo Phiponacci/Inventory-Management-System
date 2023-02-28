@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30611.23
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims.Core", "ims.Core\ims.Core.csproj", "{659AFF0C-18A8-4635-9E43-6BC758DE61DF}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims.UnitOfWork", "ims.UnitOfWork\ims.UnitOfWork.csproj", "{F7FBDF36-0E77-4A02-A9E8-8FE5AA5B62B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims.Mapper", "ims.Mapper\ims.Mapper.csproj", "{66694EDF-E3CB-4D0A-8213-93358ABA1F53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ims.Security", "ims.Security\ims.Security.csproj", "{4291D2B6-090A-4BBD-AE62-4FCA8BFDDCE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{66694EDF-E3CB-4D0A-8213-93358ABA1F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66694EDF-E3CB-4D0A-8213-93358ABA1F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66694EDF-E3CB-4D0A-8213-93358ABA1F53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4291D2B6-090A-4BBD-AE62-4FCA8BFDDCE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4291D2B6-090A-4BBD-AE62-4FCA8BFDDCE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4291D2B6-090A-4BBD-AE62-4FCA8BFDDCE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4291D2B6-090A-4BBD-AE62-4FCA8BFDDCE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

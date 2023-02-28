@@ -15,6 +15,7 @@ using ims.Repository.TransactionDetail;
 using ims.Repository.TransactionType;
 using ims.Repository.UnitOfMeasure;
 using ims.Repository.User;
+using ims.Repository.Role;
 
 namespace ims.UnitOfWork
 {
@@ -37,6 +38,7 @@ namespace ims.UnitOfWork
         private ITransactionTypeRepository iTransactionTypeRepository;
         private IUnitOfMeasureRepository iUnitOfMeasureRepository;
         private IUserRepository iUserRepository;
+        private IRoleRepository iRoleRepository;
 
         public IProductRepository ProductRepository
         {
@@ -125,6 +127,15 @@ namespace ims.UnitOfWork
             }
         }
 
+        public IRoleRepository RoleRepository
+        {
+            get
+            {
+                if (iRoleRepository == null)
+                    iRoleRepository = new RoleRepository(_context);
+                return iRoleRepository;
+            }
+        }
         public void Commit()
         {
             if (_transaction != null)
@@ -150,7 +161,7 @@ namespace ims.UnitOfWork
 
         public async Task SaveAsync()
         {
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         protected virtual void Dispose(bool disposing)

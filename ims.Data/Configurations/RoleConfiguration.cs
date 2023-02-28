@@ -1,15 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ims.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.AspNetCore.Identity;
+using System.Linq;
+using Security = ims.Security;
+
 
 namespace ims.Data.Configurations;
 
-internal class RoleConfiguration : IEntityTypeConfiguration<IdentityRole<int>>
+internal class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
-    public void Configure(EntityTypeBuilder<IdentityRole<int>> builder)
+    public void Configure(EntityTypeBuilder<Role> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).UseIdentityColumn();
-        builder.ToTable("Role");
+        builder.HasIndex(x => x.Name).IsUnique();
+
+
+        builder.HasMany(x => x.Permissions)
+            .WithMany()
+            .UsingEntity<RolePermission>();
+
+        builder.HasMany(x => x.Users).WithMany(x => x.Roles).UsingEntity<UserRole>();
+
+        builder.Property(x => x.Name).IsRequired();
+
+        builder.ToTable(nameof(Role));
     }
 }

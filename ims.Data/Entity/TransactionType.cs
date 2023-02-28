@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace ims.Data.Entity;
 
-namespace ims.Data.Entity
+public class TransactionType : BaseEntity
 {
-    public class TransactionType : BaseEntity
-    {
-        public string TransactionTypeName { get; set; }
-    }
+    public string TransactionTypeName { get; set; }
 }

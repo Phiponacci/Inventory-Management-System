@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ims.Data.Entity
+namespace ims.Data.Entity;
+
+public class BaseEntity
 {
-    public class BaseEntity
-    {
-        public int Id { get; set; }
-        public DateTime CreateDate { get; set; }
-    }
+    public int Id { get; set; }
+    public DateTime CreateDate { get; set; } = DateTime.Now;
 }

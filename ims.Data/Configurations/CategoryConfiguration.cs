@@ -14,6 +14,6 @@ internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).UseIdentityColumn();
         builder.Property(x => x.CategoryName).IsRequired().HasMaxLength(30);
-        builder.ToTable("Category");
+        builder.ToTable(nameof(Category));
     }
 }

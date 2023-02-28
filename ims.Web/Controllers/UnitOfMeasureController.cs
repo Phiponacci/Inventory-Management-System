@@ -10,129 +10,128 @@ using ims.Model.Service;
 using ims.Model.ViewModel.JsonResult;
 using ims.Model.ViewModel.UnitOfMeasure;
 
-namespace ims.Web.Controllers
+namespace ims.Web.Controllers;
+
+public class UnitOfMeasureController : Controller
 {
-    public class UnitOfMeasureController : Controller
+    private readonly IUnitOfMeasureService _unitOfMeasureService;
+    private readonly IMapper _mapper;
+
+    public UnitOfMeasureController(IUnitOfMeasureService unitOfMeasureService,
+                                   IMapper mapper)
     {
-        private readonly IUnitOfMeasureService _unitOfMeasureService;
-        private readonly IMapper _mapper;
+        _unitOfMeasureService = unitOfMeasureService;
+        _mapper = mapper;
+    }
 
-        public UnitOfMeasureController(IUnitOfMeasureService unitOfMeasureService,
-                                       IMapper mapper)
+
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken()]
+    public async Task<IActionResult> Create(CreateUnitOfMeasureViewModel model)
+    {
+        JsonResultModel jsonResultModel = new JsonResultModel();
+        try
         {
-            _unitOfMeasureService = unitOfMeasureService;
-            _mapper = mapper;
+            UnitOfMeasureDTO unitOfMeasureDTO = _mapper.Map<UnitOfMeasureDTO>(model);
+            var serviceResult = await _unitOfMeasureService.AddAsync(unitOfMeasureDTO);
+            jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
         }
-
-
-        public IActionResult Index()
+        catch (Exception ex)
         {
-            return View();
+            jsonResultModel.IsSucceeded = false;
+            jsonResultModel.UserMessage = ex.Message;
         }
+        return Json(jsonResultModel);
+    }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+    public async Task<IActionResult> Edit(int id)
+    {
+        var serviceResult = await _unitOfMeasureService.GetById(id);
+        EditUnitOfMeasureViewModel model = _mapper.Map<EditUnitOfMeasureViewModel>(serviceResult.TransactionResult);
+        return View(model);
+    }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken()]
-        public async Task<IActionResult> Create(CreateUnitOfMeasureViewModel model)
+    [HttpPost]
+    [ValidateAntiForgeryToken()]
+    public async Task<IActionResult> Edit(EditUnitOfMeasureViewModel model)
+    {
+        JsonResultModel jsonResultModel = new JsonResultModel();
+        try
         {
-            JsonResultModel jsonResultModel = new JsonResultModel();
-            try
+            UnitOfMeasureDTO unitOfMeasureDTO = _mapper.Map<UnitOfMeasureDTO>(model);
+            var serviceResult = await _unitOfMeasureService.Update(unitOfMeasureDTO);
+            jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
+            if (jsonResultModel.IsSucceeded)
             {
-                UnitOfMeasureDTO unitOfMeasureDTO = _mapper.Map<UnitOfMeasureDTO>(model);
-                var serviceResult = await _unitOfMeasureService.AddAsync(unitOfMeasureDTO);
-                jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
+                jsonResultModel.IsRedirect = true;
+                jsonResultModel.RedirectUrl = "/UnitOfMeasure";
             }
-            catch (Exception ex)
-            {
-                jsonResultModel.IsSucceeded = false;
-                jsonResultModel.UserMessage = ex.Message;
-            }
-            return Json(jsonResultModel);
         }
-
-        public async Task<IActionResult> Edit(int id)
+        catch (Exception ex)
         {
-            var serviceResult = await _unitOfMeasureService.GetById(id);
-            EditUnitOfMeasureViewModel model = _mapper.Map<EditUnitOfMeasureViewModel>(serviceResult.TransactionResult);
-            return View(model);
+            jsonResultModel.IsSucceeded = false;
+            jsonResultModel.UserMessage = ex.Message;
         }
+        return Json(jsonResultModel);
+    }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken()]
-        public async Task<IActionResult> Edit(EditUnitOfMeasureViewModel model)
+    [HttpGet]
+    public async Task<IActionResult> List(SearchUnitOfMeasureViewModel model)
+    {
+        JsonDataTableModel jsonDataTableModel = new JsonDataTableModel();
+        try
         {
-            JsonResultModel jsonResultModel = new JsonResultModel();
-            try
-            {
-                UnitOfMeasureDTO unitOfMeasureDTO = _mapper.Map<UnitOfMeasureDTO>(model);
-                var serviceResult = await _unitOfMeasureService.Update(unitOfMeasureDTO);
-                jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
-                if (jsonResultModel.IsSucceeded)
-                {
-                    jsonResultModel.IsRedirect = true;
-                    jsonResultModel.RedirectUrl = "/UnitOfMeasure";
-                }
-            }
-            catch (Exception ex)
-            {
-                jsonResultModel.IsSucceeded = false;
-                jsonResultModel.UserMessage = ex.Message;
-            }
-            return Json(jsonResultModel);
-        }
+            UnitOfMeasureDTO unitOfMeasureDTO = _mapper.Map<UnitOfMeasureDTO>(model);
+            ServiceResult<int> serviceCountResult = await _unitOfMeasureService.FindCount(unitOfMeasureDTO);
+            ServiceResult<IEnumerable<UnitOfMeasureDTO>> serviceListResult = await _unitOfMeasureService.Find(unitOfMeasureDTO);
 
-        [HttpGet]
-        public async Task<IActionResult> List(SearchUnitOfMeasureViewModel model)
-        {
-            JsonDataTableModel jsonDataTableModel = new JsonDataTableModel();
-            try
+            if (serviceCountResult.IsSucceeded && serviceListResult.IsSucceeded)
             {
-                UnitOfMeasureDTO unitOfMeasureDTO = _mapper.Map<UnitOfMeasureDTO>(model);
-                ServiceResult<int> serviceCountResult = await _unitOfMeasureService.FindCount(unitOfMeasureDTO);
-                ServiceResult<IEnumerable<UnitOfMeasureDTO>> serviceListResult = await _unitOfMeasureService.Find(unitOfMeasureDTO);
-
-                if (serviceCountResult.IsSucceeded && serviceListResult.IsSucceeded)
-                {
-                    List<ListUnitOfMeasureViewModel> listVM = _mapper.Map<List<ListUnitOfMeasureViewModel>>(serviceListResult.TransactionResult);
-                    jsonDataTableModel.aaData = listVM;
-                    jsonDataTableModel.iTotalDisplayRecords = serviceCountResult.TransactionResult;
-                    jsonDataTableModel.iTotalRecords = serviceCountResult.TransactionResult;
-                }
-                else
-                {
-                    jsonDataTableModel.IsSucceeded = false;
-                    jsonDataTableModel.UserMessage = serviceCountResult.UserMessage + "-" + serviceListResult.UserMessage;
-                }
+                List<ListUnitOfMeasureViewModel> listVM = _mapper.Map<List<ListUnitOfMeasureViewModel>>(serviceListResult.TransactionResult);
+                jsonDataTableModel.aaData = listVM;
+                jsonDataTableModel.iTotalDisplayRecords = serviceCountResult.TransactionResult;
+                jsonDataTableModel.iTotalRecords = serviceCountResult.TransactionResult;
             }
-            catch (Exception ex)
+            else
             {
                 jsonDataTableModel.IsSucceeded = false;
-                jsonDataTableModel.UserMessage = ex.Message;
+                jsonDataTableModel.UserMessage = serviceCountResult.UserMessage + "-" + serviceListResult.UserMessage;
             }
-
-            return Json(jsonDataTableModel);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        catch (Exception ex)
         {
-            JsonResultModel jsonResultModel = new JsonResultModel();
-            try
-            {
-                ServiceResult serviceResult = await _unitOfMeasureService.RemoveById(id);
-                jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
-            }
-            catch (Exception ex)
-            {
-                jsonResultModel.IsSucceeded = false;
-                jsonResultModel.UserMessage = ex.Message;
-            }
-            return Json(jsonResultModel);
+            jsonDataTableModel.IsSucceeded = false;
+            jsonDataTableModel.UserMessage = ex.Message;
         }
 
+        return Json(jsonDataTableModel);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        JsonResultModel jsonResultModel = new JsonResultModel();
+        try
+        {
+            ServiceResult serviceResult = await _unitOfMeasureService.RemoveById(id);
+            jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
+        }
+        catch (Exception ex)
+        {
+            jsonResultModel.IsSucceeded = false;
+            jsonResultModel.UserMessage = ex.Message;
+        }
+        return Json(jsonResultModel);
+    }
+
 }

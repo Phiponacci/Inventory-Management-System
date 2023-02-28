@@ -15,6 +15,7 @@ using ims.Model.ViewModel.Store;
 using ims.Model.ViewModel.Transaction;
 using ims.Model.ViewModel.UnitOfMeasure;
 using ims.Model.ViewModel.User;
+using ims.Model.ViewModel.Role;
 
 namespace ims.Mapper
 {
@@ -24,6 +25,17 @@ namespace ims.Mapper
         {
             #region DTO & ViewModel
             CreateMap<ServiceResult, JsonResultModel>();
+
+            CreateMap<CreateRoleViewModel, RoleDTO>();
+            CreateMap<SearchRoleViewModel, RoleDTO>()
+                    .ForMember(dm => dm.PageNumber, vm => vm.MapFrom(vmf => vmf.iDisplayStart))
+                    .ForMember(dm => dm.RecordCount, vm => vm.MapFrom(vmf => vmf.iDisplayLength));
+            CreateMap<RoleDTO, ListRoleViewModel>();
+            CreateMap<RoleDTO, EditRoleViewModel>();
+            CreateMap<EditRoleViewModel, RoleDTO>();
+            CreateMap<RoleDTO, SelectListItem>()
+                   .ForMember(dm => dm.Value, vm => vm.MapFrom(vmf => vmf.Id.ToString()))
+                   .ForMember(dm => dm.Text, vm => vm.MapFrom(vmf => vmf.Name));
 
 
             CreateMap<CreateCategoryViewModel, CategoryDTO>();
@@ -119,6 +131,9 @@ namespace ims.Mapper
             #endregion
 
             #region Entity & DTO
+            CreateMap<Role, RoleDTO>();
+            CreateMap<RoleDTO, Role>();
+
             CreateMap<Category, CategoryDTO>();
             CreateMap<CategoryDTO, Category>();
 

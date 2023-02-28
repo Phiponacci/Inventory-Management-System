@@ -14,6 +14,6 @@ internal class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).UseIdentityColumn();
         builder.Property(x => x.TransactionCode).HasMaxLength(30);
-        builder.ToTable("Transaction");
+        builder.ToTable(nameof(Transaction));
     }
 }

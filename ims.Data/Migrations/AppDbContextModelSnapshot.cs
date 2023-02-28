@@ -17,10 +17,10 @@ namespace ims.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.14")
+                .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("ims.Data.Entity.Category", b =>
                 {
@@ -28,7 +28,7 @@ namespace ims.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
@@ -43,13 +43,125 @@ namespace ims.Data.Migrations
                     b.ToTable("Category", (string)null);
                 });
 
+            modelBuilder.Entity("ims.Data.Entity.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Module")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Operation")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Module", "Operation")
+                        .IsUnique()
+                        .HasFilter("[Module] IS NOT NULL AND [Operation] IS NOT NULL");
+
+                    b.ToTable("Permission", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(5242),
+                            Module = "Product",
+                            Operation = "VIEW"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(6589),
+                            Module = "Product",
+                            Operation = "CREATE"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7014),
+                            Module = "Product",
+                            Operation = "UPDATE"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7044),
+                            Module = "Product",
+                            Operation = "DELETE"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7470),
+                            Module = "User",
+                            Operation = "VIEW"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7502),
+                            Module = "User",
+                            Operation = "CREATE"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7514),
+                            Module = "User",
+                            Operation = "UPDATE"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7525),
+                            Module = "User",
+                            Operation = "DELETE"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7608),
+                            Module = "Client",
+                            Operation = "VIEW"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7622),
+                            Module = "Client",
+                            Operation = "CREATE"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7633),
+                            Module = "Client",
+                            Operation = "UPDATE"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7644),
+                            Module = "Client",
+                            Operation = "DELETE"
+                        });
+                });
+
             modelBuilder.Entity("ims.Data.Entity.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Barcode")
                         .HasMaxLength(50)
@@ -92,10 +204,130 @@ namespace ims.Data.Migrations
                         {
                             Id = 1,
                             Barcode = "EX01",
-                            CreateDate = new DateTime(2023, 2, 26, 11, 34, 32, 128, DateTimeKind.Local).AddTicks(902),
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(437),
                             Price = 1m,
                             ProductName = "Example Product",
                             UnitOfMeasureId = 1
+                        });
+                });
+
+            modelBuilder.Entity("ims.Data.Entity.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Role", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 716, DateTimeKind.Local).AddTicks(9528),
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 718, DateTimeKind.Local).AddTicks(3858),
+                            Name = "Accountant"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 718, DateTimeKind.Local).AddTicks(3870),
+                            Name = "Driver"
+                        });
+                });
+
+            modelBuilder.Entity("ims.Data.Entity.RolePermission", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoleId", "PermissionId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("RolePermission", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 1
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 2
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 3
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 4
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 5
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 6
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 7
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 8
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 9
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 10
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 11
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 12
                         });
                 });
 
@@ -105,7 +337,7 @@ namespace ims.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -128,7 +360,7 @@ namespace ims.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 26, 11, 34, 32, 128, DateTimeKind.Local).AddTicks(773),
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(350),
                             StoreCode = "EX01",
                             StoreName = "Example Store"
                         });
@@ -158,7 +390,7 @@ namespace ims.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -217,7 +449,7 @@ namespace ims.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -235,19 +467,19 @@ namespace ims.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 26, 11, 34, 32, 127, DateTimeKind.Local).AddTicks(9656),
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(140),
                             TransactionTypeName = "Stock Receipt"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2023, 2, 26, 11, 34, 32, 127, DateTimeKind.Local).AddTicks(9665),
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(143),
                             TransactionTypeName = "Stock Out"
                         },
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2023, 2, 26, 11, 34, 32, 127, DateTimeKind.Local).AddTicks(9666),
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(144),
                             TransactionTypeName = "Transfer"
                         });
                 });
@@ -258,7 +490,7 @@ namespace ims.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -275,27 +507,27 @@ namespace ims.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UnitOfMeasure");
+                    b.ToTable("UnitOfMeasure", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 26, 11, 34, 32, 127, DateTimeKind.Local).AddTicks(9837),
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(240),
                             Isocode = "pc",
                             UnitOfMeasureName = "Piece"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2023, 2, 26, 11, 34, 32, 127, DateTimeKind.Local).AddTicks(9841),
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(249),
                             Isocode = "kg",
                             UnitOfMeasureName = "Kilogram"
                         },
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2023, 2, 26, 11, 34, 32, 127, DateTimeKind.Local).AddTicks(9844),
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(252),
                             Isocode = "m",
                             UnitOfMeasureName = "Meter"
                         });
@@ -307,14 +539,13 @@ namespace ims.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(40)
@@ -324,15 +555,11 @@ namespace ims.Data.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SecurityStamp")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
@@ -351,145 +578,32 @@ namespace ims.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 26, 11, 34, 32, 128, DateTimeKind.Local).AddTicks(662),
-                            FirstName = "Admin",
-                            LastName = "Admin",
-                            PasswordHash = "827ccb0eea8a706c4c34a16891f84e7b",
+                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 722, DateTimeKind.Local).AddTicks(7554),
+                            Password = "1b2ebfa84ad4d06eed294bc9b79c51cbab7c1e203a39b86395d4f5ac28807a00",
                             UserName = "Admin"
                         });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+            modelBuilder.Entity("ims.Data.Entity.UserRole", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("Role", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("UserRoleClaim", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("RoleId", "UserId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaim", (string)null);
-                });
+                    b.ToTable("UserRole");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserLogin", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("UserRole", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("UserToken", (string)null);
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("ims.Data.Entity.Product", b =>
@@ -507,6 +621,21 @@ namespace ims.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("UnitOfMeasure");
+                });
+
+            modelBuilder.Entity("ims.Data.Entity.RolePermission", b =>
+                {
+                    b.HasOne("ims.Data.Entity.Permission", null)
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ims.Data.Entity.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ims.Data.Entity.StoreStock", b =>
@@ -572,50 +701,14 @@ namespace ims.Data.Migrations
                     b.Navigation("Transaction");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("ims.Data.Entity.UserRole", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.HasOne("ims.Data.Entity.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.HasOne("ims.Data.Entity.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                    b.HasOne("ims.Data.Entity.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ims.Data.Entity.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
                     b.HasOne("ims.Data.Entity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")

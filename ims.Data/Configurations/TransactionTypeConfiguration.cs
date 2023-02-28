@@ -13,6 +13,6 @@ internal class TransactionTypeConfiguration : IEntityTypeConfiguration<Transacti
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.TransactionTypeName).IsRequired().HasMaxLength(50);
-        builder.ToTable("TransactionType");
+        builder.ToTable(nameof(TransactionType));
     }
 }

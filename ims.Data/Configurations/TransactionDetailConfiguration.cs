@@ -13,6 +13,6 @@ internal class TransactionDetailConfiguration : IEntityTypeConfiguration<Transac
     {
         builder.HasKey(x => new { x.TransactionId, x.ProductId });
         builder.Property(x => x.Amount).HasColumnType("decimal(18,2)");
-        builder.ToTable("TransactionDetail");
+        builder.ToTable(nameof(TransactionDetail));
     }
 }

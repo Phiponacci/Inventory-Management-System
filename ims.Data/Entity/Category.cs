@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace ims.Data.Entity
+namespace ims.Data.Entity;
+
+public class Category : BaseEntity
 {
-    public class Category : BaseEntity
-    {
-        public string CategoryName { get; set; }
-        public virtual ICollection<Product> Product { get; set; }
-    }
+    public string CategoryName { get; set; }
+    public virtual ICollection<Product> Product { get; set; }
 }

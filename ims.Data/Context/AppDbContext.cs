@@ -1,16 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using ims.Data.Configurations;
+﻿using ims.Data.Configurations;
 using ims.Data.Entity;
 using ims.Data.Seed;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ims.Data.Context
 {
-    public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -25,37 +20,45 @@ namespace ims.Data.Context
         public DbSet<TransactionType> TransactionType { get; set; }
         public DbSet<UnitOfMeasure> UnitOfMeasure { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Permission> Permission { get; set; }
+        public DbSet<Role> Role { get; set; }
+        public DbSet<RolePermission> RolePermission { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder) 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
 
             // business
-            builder.ApplyConfiguration(new CategoryConfiguration());
-            builder.ApplyConfiguration(new ProductConfiguration());
-            builder.ApplyConfiguration(new StoreConfiguration());
-            builder.ApplyConfiguration(new StoreStockConfiguration());
-            builder.ApplyConfiguration(new TransactionConfiguration());
-            builder.ApplyConfiguration(new TransactionDetailConfiguration());
-            builder.ApplyConfiguration(new TransactionTypeConfiguration());
-            builder.ApplyConfiguration(new UnitOfMeasureConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new StoreConfiguration());
+            modelBuilder.ApplyConfiguration(new StoreStockConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UnitOfMeasureConfiguration());
 
             // users
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new RoleConfiguration());
-            builder.ApplyConfiguration(new UserRoleConfiguration());
-            builder.ApplyConfiguration(new UserClaimConfiguration());
-            builder.ApplyConfiguration(new RoleClaimConfiguration());
-            builder.ApplyConfiguration(new UserTokenConfiguration());
-            builder.ApplyConfiguration(new UserLoginConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new PermissionConfiguration());
+            modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
+
 
             // seeds
-            builder.ApplyConfiguration(new TransactionTypeSeed());
-            builder.ApplyConfiguration(new UnitOfMeasureSeed());
-            builder.ApplyConfiguration(new UserSeed());
-            builder.ApplyConfiguration(new StoreSeed());
-            builder.ApplyConfiguration(new ProductSeed());
-        }
+            modelBuilder.ApplyConfiguration(new RoleSeed());
+            modelBuilder.ApplyConfiguration(new PermissionSeed());
+            modelBuilder.ApplyConfiguration(new RolePermissionSeed());
+            modelBuilder.ApplyConfiguration(new UserSeed());
+            modelBuilder.ApplyConfiguration(new UserRoleSeed());
 
+            modelBuilder.ApplyConfiguration(new TransactionTypeSeed());
+            modelBuilder.ApplyConfiguration(new UnitOfMeasureSeed());
+            modelBuilder.ApplyConfiguration(new StoreSeed());
+            modelBuilder.ApplyConfiguration(new ProductSeed());
+        }
     }
+
+
+
 }

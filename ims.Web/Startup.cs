@@ -1,5 +1,19 @@
-using System;
+using ims.Core.Repository;
+using ims.Core.Service;
+using ims.Core.UnitOfWorks;
+using ims.Data.Context;
+using ims.Repository.Base;
+using ims.Security.Configurations;
+using ims.Service.Category;
+using ims.Service.Product;
+using ims.Service.Role;
+using ims.Service.Store;
+using ims.Service.StoreStock;
+using ims.Service.Transaction;
+using ims.Service.UnitOfMeasure;
+using ims.Service.User;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,18 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ims.Core.Repository;
-using ims.Core.Service;
-using ims.Core.UnitOfWorks;
-using ims.Data.Context;
-using ims.Repository.Base;
-using ims.Service.Category;
-using ims.Service.Product;
-using ims.Service.Store;
-using ims.Service.StoreStock;
-using ims.Service.Transaction;
-using ims.Service.UnitOfMeasure;
-using ims.Service.User;
+using System;
 
 namespace ims.Web
 {
@@ -34,6 +37,9 @@ namespace ims.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:SqlConStr"].ToString(), o =>
@@ -41,8 +47,10 @@ namespace ims.Web
                     o.MigrationsAssembly("ims.Data");
                 });
             });
-            services.AddAutoMapper(c => c.AddProfile<ims.Mapper.MapProfile>(), typeof(Startup));
+
+            services.AddAutoMapper(c => c.AddProfile<Mapper.MapProfile>(), typeof(Startup));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitOfMeasureService, UnitOfMeasureService>();
             services.AddScoped<IUserService, UserService>();
@@ -50,7 +58,7 @@ namespace ims.Web
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IStoreStockService, StoreStockService>();
             services.AddScoped<ITransactionService, TransactionService>();
-            services.AddScoped<IUnitOfWorks, ims.UnitOfWork.UnitOfWork>();
+            services.AddScoped<IUnitOfWorks, UnitOfWork.UnitOfWork>();
             services.AddControllersWithViews().
                     AddJsonOptions(options =>
                     {
@@ -66,6 +74,7 @@ namespace ims.Web
                          options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
                          options.SlidingExpiration = true;
                      });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
