@@ -67,7 +67,7 @@ public class UserService : BaseService, IUserService
                                                                                     (string.IsNullOrEmpty(criteria.LastName) || x.LastName.Contains(criteria.LastName)),
                                                                        orderByDesc: x => x.Id,
                                                                        skip: criteria.PageNumber,
-                                                                       take: criteria.RecordCount);
+                                                                       take: criteria.RecordCount, includes: new[] { "Roles" });
 
                 result.TransactionResult = _mapper.Map<IEnumerable<UserDTO>>(list);
             }
@@ -150,7 +150,7 @@ public class UserService : BaseService, IUserService
                 {
                     var userDTO = _mapper.Map<UserDTO>(user);
                     userDTO.Permissions = user.Roles.SelectMany(role => role.Permissions).Select(p => p.ToString()).ToList();
-                    userDTO.Roles = user.Roles.Select(role => role.Name).ToList();
+                    userDTO.Roles = user.Roles.Select(role => role.RoleName).ToList();
                     result.IsSucceeded = true;
                     result.TransactionResult = userDTO;
                 }

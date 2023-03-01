@@ -48,7 +48,7 @@ public class RoleService : BaseService, IRoleService
             {
                 IEnumerable<Entity.Role> list = await _unitOfWork
                                                             .RoleRepository
-                                                            .FindAsync(filter: x => (string.IsNullOrEmpty(criteria.Name) || x.Name.Contains(criteria.Name)),
+                                                            .FindAsync(filter: x => (string.IsNullOrEmpty(criteria.RoleName) || x.RoleName.Contains(criteria.RoleName)),
                                                                        orderByDesc: x => x.Id,
                                                                        skip: criteria.PageNumber,
                                                                        take: criteria.RecordCount);
@@ -71,7 +71,7 @@ public class RoleService : BaseService, IRoleService
             using (_unitOfWork)
             {
                 int count = await _unitOfWork.RoleRepository
-                                              .FindCountAsync(filter: x => (string.IsNullOrEmpty(criteria.Name) || x.Name.Contains(criteria.Name)));
+                                              .FindCountAsync(filter: x => (string.IsNullOrEmpty(criteria.RoleName) || x.RoleName.Contains(criteria.RoleName)));
 
                 result.TransactionResult = count;
             }
@@ -110,6 +110,25 @@ public class RoleService : BaseService, IRoleService
             using (_unitOfWork)
             {
                 Entity.Role entity = await _unitOfWork.RoleRepository.GetByIdAsync(id);
+                result.TransactionResult = _mapper.Map<RoleDTO>(entity);
+            }
+        }
+        catch (Exception ex)
+        {
+            result.IsSucceeded = false;
+            result.UserMessage = string.Format(CommonMessages.MSG0002, ex.Message);
+        }
+        return result;
+    }
+
+    public async Task<ServiceResult<RoleDTO>> GetWithPermissionsByIdAsync(int id)
+    {
+        ServiceResult<RoleDTO> result = new ServiceResult<RoleDTO>();
+        try
+        {
+            using (_unitOfWork)
+            {
+                Entity.Role entity = await _unitOfWork.RoleRepository.GetWithPermissionsByIdAsync(id);
                 result.TransactionResult = _mapper.Map<RoleDTO>(entity);
             }
         }

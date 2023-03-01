@@ -11,6 +11,6 @@ public class CreateRoleViewModel : BaseViewModel
     [Required]
     [MaxLength(50)]
     [Display]
-    public string Name { get; set; }
+    public string RoleName { get; set; }
 
 }

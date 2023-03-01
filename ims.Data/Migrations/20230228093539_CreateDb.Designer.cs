@@ -12,7 +12,7 @@ using ims.Data.Context;
 namespace ims.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230227222041_CreateDb")]
+    [Migration("20230228093539_CreateDb")]
     partial class CreateDb
     {
         /// <inheritdoc />
@@ -75,84 +75,84 @@ namespace ims.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(5242),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(4233),
                             Module = "Product",
                             Operation = "VIEW"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(6589),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(6616),
                             Module = "Product",
                             Operation = "CREATE"
                         },
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7014),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7400),
                             Module = "Product",
                             Operation = "UPDATE"
                         },
                         new
                         {
                             Id = 4,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7044),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7434),
                             Module = "Product",
                             Operation = "DELETE"
                         },
                         new
                         {
                             Id = 5,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7470),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7886),
                             Module = "User",
                             Operation = "VIEW"
                         },
                         new
                         {
                             Id = 6,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7502),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7933),
                             Module = "User",
                             Operation = "CREATE"
                         },
                         new
                         {
                             Id = 7,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7514),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7947),
                             Module = "User",
                             Operation = "UPDATE"
                         },
                         new
                         {
                             Id = 8,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7525),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8054),
                             Module = "User",
                             Operation = "DELETE"
                         },
                         new
                         {
                             Id = 9,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7608),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8150),
                             Module = "Client",
                             Operation = "VIEW"
                         },
                         new
                         {
                             Id = 10,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7622),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8165),
                             Module = "Client",
                             Operation = "CREATE"
                         },
                         new
                         {
                             Id = 11,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7633),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8179),
                             Module = "Client",
                             Operation = "UPDATE"
                         },
                         new
                         {
                             Id = 12,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 721, DateTimeKind.Local).AddTicks(7644),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8191),
                             Module = "Client",
                             Operation = "DELETE"
                         });
@@ -207,7 +207,7 @@ namespace ims.Data.Migrations
                         {
                             Id = 1,
                             Barcode = "EX01",
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(437),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(3055),
                             Price = 1m,
                             ProductName = "Example Product",
                             UnitOfMeasureId = 1
@@ -225,13 +225,13 @@ namespace ims.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("RoleName")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("RoleName")
                         .IsUnique();
 
                     b.ToTable("Role", (string)null);
@@ -240,20 +240,20 @@ namespace ims.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 716, DateTimeKind.Local).AddTicks(9528),
-                            Name = "Admin"
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 495, DateTimeKind.Local).AddTicks(7589),
+                            RoleName = "Admin"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 718, DateTimeKind.Local).AddTicks(3858),
-                            Name = "Accountant"
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 497, DateTimeKind.Local).AddTicks(5022),
+                            RoleName = "Accountant"
                         },
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 718, DateTimeKind.Local).AddTicks(3870),
-                            Name = "Driver"
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 497, DateTimeKind.Local).AddTicks(5040),
+                            RoleName = "Driver"
                         });
                 });
 
@@ -363,7 +363,7 @@ namespace ims.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(350),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2855),
                             StoreCode = "EX01",
                             StoreName = "Example Store"
                         });
@@ -470,19 +470,19 @@ namespace ims.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(140),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2528),
                             TransactionTypeName = "Stock Receipt"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(143),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2532),
                             TransactionTypeName = "Stock Out"
                         },
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(144),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2534),
                             TransactionTypeName = "Transfer"
                         });
                 });
@@ -516,21 +516,21 @@ namespace ims.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(240),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2693),
                             Isocode = "pc",
                             UnitOfMeasureName = "Piece"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(249),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2705),
                             Isocode = "kg",
                             UnitOfMeasureName = "Kilogram"
                         },
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 41, 105, DateTimeKind.Local).AddTicks(252),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2711),
                             Isocode = "m",
                             UnitOfMeasureName = "Meter"
                         });
@@ -581,7 +581,7 @@ namespace ims.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2023, 2, 27, 23, 20, 40, 722, DateTimeKind.Local).AddTicks(7554),
+                            CreateDate = new DateTime(2023, 2, 28, 10, 35, 38, 504, DateTimeKind.Local).AddTicks(1084),
                             Password = "1b2ebfa84ad4d06eed294bc9b79c51cbab7c1e203a39b86395d4f5ac28807a00",
                             UserName = "Admin"
                         });

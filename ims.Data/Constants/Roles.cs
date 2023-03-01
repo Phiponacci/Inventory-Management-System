@@ -8,18 +8,18 @@ internal static class Roles
     public static readonly Entity.Role AdminRole = new()
     {
         Id = 1,
-        Name = Security.Enums.Role.Admin
+        RoleName = Security.Enums.Role.Admin
     };
 
     public static readonly Entity.Role AccountantRole = new()
     {
         Id = 2,
-        Name = Security.Enums.Role.Accountant
+        RoleName = Security.Enums.Role.Accountant
     };
 
     public static readonly Entity.Role DriverRole = new()
     {
         Id = 3,
-        Name = Security.Enums.Role.Driver
+        RoleName = Security.Enums.Role.Driver
     };
 }

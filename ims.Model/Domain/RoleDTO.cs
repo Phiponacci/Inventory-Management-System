@@ -4,5 +4,6 @@ namespace ims.Model.Domain;
 
 public class RoleDTO : BaseDTO
 {
-    public string Name { get; set; }
+    public string RoleName { get; set; }
+    public ICollection<PermissionDTO> Permissions { get; set; }
 }

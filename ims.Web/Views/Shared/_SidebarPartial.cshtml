@@ -1,4 +1,7 @@
-﻿<nav class="mt-2">
+﻿@using ims.Common.Enums;
+@using ims.Security.Enums;
+@using ims.Security.Extensions;
+<nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li class="nav-header">Stock</li>
@@ -31,6 +34,8 @@
                 </p>
             </a>
         </li>
+
+
         <li class="nav-item">
             <a href="/UnitOfMeasure" class="nav-link">
                 <i class="nav-icon fas fa-box-open"></i>
@@ -55,15 +60,17 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="/User" class="nav-link">
-                <i class="nav-icon fas fa-user"></i>
-                <p>
-                    User
-                </p>
-            </a>
-        </li>
-
+        @if (User.HasPermission(Module.User, Operation.VIEW))
+        {
+            <li class="nav-item">
+                <a href="/User" class="nav-link">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>
+                        User
+                    </p>
+                </a>
+            </li>
+        }
         <li class="nav-item">
             <a href="/Role" class="nav-link">
                 <i class="nav-icon fas fa-shield-alt"></i>

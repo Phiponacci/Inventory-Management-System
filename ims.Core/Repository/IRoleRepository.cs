@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ims.Core.Repository;
 
-public interface IRoleRepository : IRepository<ims.Data.Entity.Role>
+public interface IRoleRepository : IRepository<Role>
 {
+    public Task<Role> GetWithPermissionsByIdAsync(int id);
+
+    public void Update(Role entity);
 }

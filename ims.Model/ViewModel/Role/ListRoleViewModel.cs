@@ -7,5 +7,5 @@ namespace ims.Model.ViewModel.Role;
 
 public class ListRoleViewModel : BaseViewModel
 {
-    public string Name { get; set; }
+    public string RoleName { get; set; }
 }

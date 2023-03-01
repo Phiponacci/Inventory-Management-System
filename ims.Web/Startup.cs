@@ -44,6 +44,7 @@ namespace ims.Web
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:SqlConStr"].ToString(), o =>
                 {
+
                     o.MigrationsAssembly("ims.Data");
                 });
             });

@@ -4,7 +4,7 @@ namespace ims.Data.Entity;
 
 public class Role : BaseEntity
 {
-    public string Name { get; set; }
+    public string RoleName { get; set; }
 
     public ICollection<Permission> Permissions { get; set; }
 

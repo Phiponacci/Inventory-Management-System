@@ -13,8 +13,9 @@ internal class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).UseIdentityColumn();
-        builder.HasIndex(x => x.Name).IsUnique();
+        builder.HasIndex(x => x.RoleName).IsUnique();
 
+        
 
         builder.HasMany(x => x.Permissions)
             .WithMany()
@@ -22,7 +23,7 @@ internal class RoleConfiguration : IEntityTypeConfiguration<Role>
 
         builder.HasMany(x => x.Users).WithMany(x => x.Roles).UsingEntity<UserRole>();
 
-        builder.Property(x => x.Name).IsRequired();
+        builder.Property(x => x.RoleName).IsRequired();
 
         builder.ToTable(nameof(Role));
     }

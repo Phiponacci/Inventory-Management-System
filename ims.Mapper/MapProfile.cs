@@ -16,6 +16,8 @@ using ims.Model.ViewModel.Transaction;
 using ims.Model.ViewModel.UnitOfMeasure;
 using ims.Model.ViewModel.User;
 using ims.Model.ViewModel.Role;
+using System.Linq;
+using ims.Model.ViewModel.Permission;
 
 namespace ims.Mapper
 {
@@ -32,10 +34,14 @@ namespace ims.Mapper
                     .ForMember(dm => dm.RecordCount, vm => vm.MapFrom(vmf => vmf.iDisplayLength));
             CreateMap<RoleDTO, ListRoleViewModel>();
             CreateMap<RoleDTO, EditRoleViewModel>();
+
+            CreateMap<PermissionDTO, PermissionViewModel>();
+            CreateMap<PermissionViewModel, PermissionDTO>();
+
             CreateMap<EditRoleViewModel, RoleDTO>();
             CreateMap<RoleDTO, SelectListItem>()
                    .ForMember(dm => dm.Value, vm => vm.MapFrom(vmf => vmf.Id.ToString()))
-                   .ForMember(dm => dm.Text, vm => vm.MapFrom(vmf => vmf.Name));
+                   .ForMember(dm => dm.Text, vm => vm.MapFrom(vmf => vmf.RoleName));
 
 
             CreateMap<CreateCategoryViewModel, CategoryDTO>();
@@ -66,7 +72,10 @@ namespace ims.Mapper
             CreateMap<SearchUserViewModel, UserDTO>()
                     .ForMember(dm => dm.PageNumber, vm => vm.MapFrom(vmf => vmf.iDisplayStart))
                     .ForMember(dm => dm.RecordCount, vm => vm.MapFrom(vmf => vmf.iDisplayLength));
-            CreateMap<UserDTO, ListUserViewModel>();
+            CreateMap<UserDTO, ListUserViewModel>()
+                .ForMember(dm => dm.Roles, vm => vm.MapFrom(vmf => string.Join(", ", vmf.Roles)));
+
+
             CreateMap<UserDTO, EditUserViewModel>();
             CreateMap<EditUserViewModel, UserDTO>();
 
@@ -134,6 +143,9 @@ namespace ims.Mapper
             CreateMap<Role, RoleDTO>();
             CreateMap<RoleDTO, Role>();
 
+            CreateMap<Permission, PermissionDTO>();
+            CreateMap<PermissionDTO, Permission>();
+
             CreateMap<Category, CategoryDTO>();
             CreateMap<CategoryDTO, Category>();
 
@@ -142,6 +154,9 @@ namespace ims.Mapper
 
             CreateMap<User, UserDTO>();
             CreateMap<UserDTO, User>();
+
+            CreateMap<User, UserDTO>()
+                .ForMember(dm => dm.Roles, vm => vm.MapFrom(vmf => vmf.Roles.Select(r => r.RoleName)));
 
 
             CreateMap<Store, StoreDTO>();

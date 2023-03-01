@@ -13,7 +13,7 @@ $(document).ready(function () {
 		"fnServerData": function (sSource, aoData, fnCallback, oSettings) {
 			aoData.push(
 				{ "name": "returnformat", "value": "plain" },
-				{ "name": "Name", "value": $('input[name="Name"]').val() }
+				{ "name": "RoleName", "value": $('input[name="RoleName"]').val() }
 			);
 			$.ajax({
 				"dataType": 'json',
@@ -33,7 +33,7 @@ $(document).ready(function () {
 		aoColumns:
 			[
 				{
-					mDataProp: "Name"
+					mDataProp: "RoleName"
 				},
 				{
 					"sDefaultContent": "",
@@ -59,7 +59,7 @@ $(document).ready(function () {
 
 
 	$('.enter-keyup').keypress(function (event) {
-		var keycode = (event.keyCode ? event.keyCode : event.which);
+		const keycode = (event.keyCode ? event.keyCode : event.which);
 		if (keycode == '13') {
 			datatable.fnFilter();
 		}
@@ -70,21 +70,31 @@ $(document).ready(function () {
 
 
 function deleteRow(row, id) {
-
-	$.ajax({
-		url: '/Role/Delete/' + id,
-		type: "POST",
-		async: false,
-		success: function (data) {
-			if (data.IsSucceeded) {
-				var aPos = $('#datatable').dataTable().fnGetPosition(row);
-				$('#datatable').dataTable().fnDeleteRow(aPos);
-				toastr.success(data.UserMessage);
+	toastr.warning("<button type='button' id='confirm' class='btn btn-sm btn-danger mt-3 m-1'>CONFIRM</button><button type='button' id='cancel' class='btn btn-sm btn-outline-secondary mt-3 m-1'>CANCEL</button>", 'Do you want to Delete this Role?',
+		{
+			closeButton: true,
+			allowHtml: true,
+			timeOut: 0,
+			extendedTimeOut: 0,
+			onShown: function (toast) {
+				$("#confirm").click(function () {
+					$.ajax({
+						url: '/Role/Delete/' + id,
+						type: "POST",
+						async: false,
+						success: function (data) {
+							if (data.IsSucceeded) {
+								const aPos = $('#datatable').dataTable().fnGetPosition(row);
+								$('#datatable').dataTable().fnDeleteRow(aPos);
+								toastr.success(data.UserMessage);
+							}
+							else {
+								toastr.error(data.UserMessage);
+							}
+						}
+					});
+				});
 			}
-			else {
-				toastr.error(data.UserMessage);
-			}
-		}
-	});
+		});
 }
 

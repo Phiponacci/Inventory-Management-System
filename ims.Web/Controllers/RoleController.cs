@@ -16,6 +16,8 @@ using ims.Model.ViewModel.Category;
 using ims.Service.Category;
 using AutoMapper;
 using ims.Model.ViewModel.Role;
+using Microsoft.AspNetCore.Http;
+using ims.Web.Extensions;
 
 namespace ims.Web.Controllers;
 
@@ -62,19 +64,21 @@ public class RoleController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        var serviceResult = await _roleService.GetById(id);
+        var serviceResult = await _roleService.GetWithPermissionsByIdAsync(id);
         EditRoleViewModel model = _mapper.Map<EditRoleViewModel>(serviceResult.TransactionResult);
         return View(model);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken()]
-    public async Task<IActionResult> Edit(EditRoleViewModel model)
+    public async Task<IActionResult> Edit(EditRoleViewModel model, IFormCollection form)
     {
         JsonResultModel jsonResultModel = new JsonResultModel();
         try
         {
             RoleDTO roleDTO = _mapper.Map<RoleDTO>(model);
+            var permissions = form.GetPermissions();
+            roleDTO.Permissions = _mapper.Map<ICollection<PermissionDTO>>(permissions);
             var serviceResult = await _roleService.Update(roleDTO);
             jsonResultModel = _mapper.Map<JsonResultModel>(serviceResult);
             if (jsonResultModel.IsSucceeded)
@@ -139,4 +143,5 @@ public class RoleController : Controller
         }
         return Json(jsonResultModel);
     }
+
 }
