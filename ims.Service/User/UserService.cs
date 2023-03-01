@@ -68,7 +68,6 @@ public class UserService : BaseService, IUserService
                                                                        orderByDesc: x => x.Id,
                                                                        skip: criteria.PageNumber,
                                                                        take: criteria.RecordCount, includes: new[] { "Roles" });
-
                 result.TransactionResult = _mapper.Map<IEnumerable<UserDTO>>(list);
             }
         }
@@ -138,6 +137,26 @@ public class UserService : BaseService, IUserService
         }
         return result;
     }
+
+    public async Task<ServiceResult<UserDTO>> GetWithRolesById(int id)
+    {
+        ServiceResult<UserDTO> result = new ServiceResult<UserDTO>();
+        try
+        {
+            using (_unitOfWork)
+            {
+                Entity.User entity = await _unitOfWork.UserRepository.GetWithRolesByIdAsync(id);
+                result.TransactionResult = _mapper.Map<UserDTO>(entity);
+            }
+        }
+        catch (Exception ex)
+        {
+            result.IsSucceeded = false;
+            result.UserMessage = string.Format(CommonMessages.MSG0002, ex.Message);
+        }
+        return result;
+    }
+
     public ServiceResult<UserDTO> Login(string userName, string password)
     {
         ServiceResult<UserDTO> result = new ServiceResult<UserDTO>();
@@ -150,7 +169,7 @@ public class UserService : BaseService, IUserService
                 {
                     var userDTO = _mapper.Map<UserDTO>(user);
                     userDTO.Permissions = user.Roles.SelectMany(role => role.Permissions).Select(p => p.ToString()).ToList();
-                    userDTO.Roles = user.Roles.Select(role => role.RoleName).ToList();
+                    userDTO.Roles = _mapper.Map<List<RoleDTO>>(user.Roles);
                     result.IsSucceeded = true;
                     result.TransactionResult = userDTO;
                 }

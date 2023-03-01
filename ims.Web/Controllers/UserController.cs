@@ -10,18 +10,23 @@ using ims.Model.Service;
 using ims.Model.ViewModel.JsonResult;
 using ims.Model.ViewModel.User;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using ims.Service.Store;
 
 namespace ims.Web.Controllers;
 
 public class UserController : Controller
 {
     private readonly IUserService _userService;
+    private readonly IRoleService _roleService;
     private readonly IMapper _mapper;
 
     public UserController(IUserService userService,
+                          IRoleService roleService,
                           IMapper mapper)
     {
         _userService = userService;
+        _roleService = roleService;
         _mapper = mapper;
     }
 
@@ -54,11 +59,19 @@ public class UserController : Controller
         return Json(jsonResultModel);
     }
 
+    private async Task<IEnumerable<SelectListItem>> GetRoleList()
+    {
+        ServiceResult<IEnumerable<RoleDTO>> serviceResult = await _roleService.GetAll();
+        IEnumerable<SelectListItem> drpRoleList = _mapper.Map<IEnumerable<SelectListItem>>(serviceResult.TransactionResult);
+        return drpRoleList;
+    }
+
     //[HasPermission(Operation.UPDATE, Module.User)]
     public async Task<IActionResult> Edit(int id)
     {
-        var serviceResult = await _userService.GetById(id);
+        var serviceResult = await _userService.GetWithRolesById(id);
         EditUserViewModel model = _mapper.Map<EditUserViewModel>(serviceResult.TransactionResult);
+        model.RoleList = await GetRoleList();
         return View(model);
     }
 
@@ -106,6 +119,7 @@ public class UserController : Controller
             }
             else
             {
+                Console.WriteLine("check");
                 jsonDataTableModel.IsSucceeded = false;
                 jsonDataTableModel.UserMessage = serviceCountResult.UserMessage + "-" + serviceListResult.UserMessage;
             }

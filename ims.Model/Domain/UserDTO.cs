@@ -10,6 +10,6 @@ public class UserDTO : BaseDTO
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string PhoneNumber { get; set; }
-    public List<string> Permissions { get; set; }
-    public List<string> Roles { get; set; }
+    public ICollection<string> Permissions { get; set; }
+    public ICollection<RoleDTO> Roles { get; set; }
 }

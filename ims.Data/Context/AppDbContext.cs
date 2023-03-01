@@ -23,6 +23,7 @@ namespace ims.Data.Context
         public DbSet<Permission> Permission { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<RolePermission> RolePermission { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

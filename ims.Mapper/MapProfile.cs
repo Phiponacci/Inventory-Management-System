@@ -1,23 +1,20 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ims.Data.Entity;
 using ims.Model.Domain;
 using ims.Model.Service;
 using ims.Model.ViewModel.Category;
 using ims.Model.ViewModel.JsonResult;
+using ims.Model.ViewModel.Permission;
 using ims.Model.ViewModel.Product;
 using ims.Model.ViewModel.Report.StoreStock;
 using ims.Model.ViewModel.Report.TransactionDetail;
+using ims.Model.ViewModel.Role;
 using ims.Model.ViewModel.Store;
 using ims.Model.ViewModel.Transaction;
 using ims.Model.ViewModel.UnitOfMeasure;
 using ims.Model.ViewModel.User;
-using ims.Model.ViewModel.Role;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
-using ims.Model.ViewModel.Permission;
 
 namespace ims.Mapper
 {
@@ -73,11 +70,13 @@ namespace ims.Mapper
                     .ForMember(dm => dm.PageNumber, vm => vm.MapFrom(vmf => vmf.iDisplayStart))
                     .ForMember(dm => dm.RecordCount, vm => vm.MapFrom(vmf => vmf.iDisplayLength));
             CreateMap<UserDTO, ListUserViewModel>()
-                .ForMember(dm => dm.Roles, vm => vm.MapFrom(vmf => string.Join(", ", vmf.Roles)));
+                .ForMember(dm => dm.Roles, vm => vm.MapFrom(vmf => string.Join(", ", vmf.Roles.Select(x => x.RoleName).ToList())));
 
+            CreateMap<UserDTO, EditUserViewModel>()
+                .ForMember(dm => dm.Roles, vm => vm.MapFrom(vmf => vmf.Roles.Select(x => x.Id)));
+            CreateMap<EditUserViewModel, UserDTO>()
+                .ForMember(dm => dm.Roles, vm => vm.MapFrom(vmf => vmf.Roles.Select(x => new RoleDTO { Id = x }).ToList()));
 
-            CreateMap<UserDTO, EditUserViewModel>();
-            CreateMap<EditUserViewModel, UserDTO>();
 
             CreateMap<CreateStoreViewModel, StoreDTO>();
             CreateMap<SearchStoreViewModel, StoreDTO>()
@@ -135,7 +134,7 @@ namespace ims.Mapper
                  .ForMember(dm => dm.StoreFullName, vm => vm.MapFrom(vmf => string.Format("{1} ({0})", vmf.StoreCode, vmf.StoreName)))
                  .ForMember(dm => dm.ToStoreFullName, vm => vm.MapFrom(vmf => !string.IsNullOrEmpty(vmf.ToStoreName) ? string.Format("{1} ({0})", vmf.ToStoreCode, vmf.ToStoreName) : ""))
                  .ForMember(dm => dm.Amount, vm => vm.MapFrom(vmf => string.Format("{0} ({1})", vmf.Amount.ToString(), vmf.UnitOfMeasureShortName)))
-                 .ForMember(dm => dm.TransactionDate, vm => vm.MapFrom(vmf => string.Format("{0:D}", vmf.TransactionDate))); ;
+                 .ForMember(dm => dm.TransactionDate, vm => vm.MapFrom(vmf => string.Format("{0:D}", vmf.TransactionDate)));
 
             #endregion
 
@@ -154,10 +153,6 @@ namespace ims.Mapper
 
             CreateMap<User, UserDTO>();
             CreateMap<UserDTO, User>();
-
-            CreateMap<User, UserDTO>()
-                .ForMember(dm => dm.Roles, vm => vm.MapFrom(vmf => vmf.Roles.Select(r => r.RoleName)));
-
 
             CreateMap<Store, StoreDTO>();
             CreateMap<StoreDTO, Store>();

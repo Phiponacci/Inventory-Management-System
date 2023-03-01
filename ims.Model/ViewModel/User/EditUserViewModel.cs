@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using ims.Model.Domain;
 using ims.Model.ViewModel.Base;
+using ims.Model.ViewModel.Role;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ims.Model.ViewModel.User;
 
@@ -34,5 +37,9 @@ public class EditUserViewModel : BaseViewModel
     [MaxLength(30)]
     [Display]
     public string PhoneNumber { get; set; }
+
+    [Display]
+    public IEnumerable<SelectListItem> RoleList { get; set; }
+    public IEnumerable<int> Roles { get; set; }
 
 }

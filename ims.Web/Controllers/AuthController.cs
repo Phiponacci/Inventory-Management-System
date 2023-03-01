@@ -46,7 +46,7 @@ public class AuthController : Controller
                     .Select(p => new Claim(PermissionClaimType.Permission, $"{PermissionClaimType.Permission}.{p}"))
                     .Append(new Claim(ClaimTypes.Name, model.UserName))
                     .ToList();
-                claims.AddRange(result.TransactionResult.Roles.Select(r => new Claim(ClaimTypes.Role, r)));
+                claims.AddRange(result.TransactionResult.Roles.Select(r => new Claim(ClaimTypes.Role, r.RoleName)));
                 var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);

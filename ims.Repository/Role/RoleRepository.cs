@@ -1,9 +1,11 @@
 ﻿using ims.Core.Repository;
 using ims.Data.Context;
 using ims.Data.Entity;
+using ims.Data.EqualityComparer;
 using ims.Repository.Base;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
@@ -26,18 +28,7 @@ public class RoleRepository : Repository<Entity.Role>, IRoleRepository
 
     public new void Update(Entity.Role entity)
     {
-        entity.Permissions = entity
-                    .Permissions
-                    .SelectMany(p =>
-                            dbContext
-                            .Permission
-                            .Where(x =>
-                                x.Module.Equals(p.Module)
-                                && x.Operation.Equals(p.Operation))
-                            .AsNoTracking()
-                            .ToList()
-                            )
-                    .ToList();
+        entity.Permissions = dbContext.Permission.AsEnumerable().Intersect(entity.Permissions, new PermissionComparer()).ToList();
         dbContext.RolePermission.Where(x => x.RoleId == entity.Id).ExecuteDelete();
         dbContext.Role.Update(entity);
     }
