@@ -187,7 +187,7 @@ public class UserService : BaseService, IUserService
                 if (user != default)
                 {
                     var userDTO = _mapper.Map<UserDTO>(user);
-                    userDTO.Permissions = user.Roles.SelectMany(role => role.Permissions).Select(p => p.ToString()).ToList();
+                    userDTO.Permissions = user.Roles.SelectMany(role => role.Permissions).Select(p => p.ToString()).Distinct().ToList();
                     userDTO.Roles = _mapper.Map<List<RoleDTO>>(user.Roles);
                     result.IsSucceeded = true;
                     result.TransactionResult = userDTO;
