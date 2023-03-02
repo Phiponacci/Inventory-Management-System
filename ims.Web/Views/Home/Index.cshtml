@@ -1,15 +1,22 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+
+@inject IOptions<RequestLocalizationOptions> locOptions
+
+@{
     ViewData["Title"] = "Home Page";
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
 }
 
 <section class="content pt-2">
     <div class="container-fluid ">
-        <div class="row ">
+        <div class="row">
             <div class="col-md-12">
                 <h2>Welcome to IMS</h2>
+                <h2>@DateTime.Now.ToLongDateString()</h2>
                 <div class="row">
                     <div class="col-lg-3 col-6">
-
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>150</h3>
@@ -23,7 +30,6 @@
                     </div>
 
                     <div class="col-lg-3 col-6">
-
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>53<sup style="font-size: 20px">%</sup></h3>

@@ -17,11 +17,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
+using System.Globalization;
 
 namespace ims.Web
 {
@@ -60,6 +64,26 @@ namespace ims.Web
             services.AddScoped<IStoreStockService, StoreStockService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IUnitOfWorks, UnitOfWork.UnitOfWork>();
+
+
+            services.AddLocalization(options => options.ResourcesPath = "/Langs");
+
+            services.AddMvc()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ar-DZ"),
+                    new CultureInfo("fr-FR")
+                };
+                options.DefaultRequestCulture = new RequestCulture(culture: "ar-DZ", uiCulture: "ar-DZ");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.AddControllersWithViews().
                     AddJsonOptions(options =>
                     {
@@ -92,6 +116,9 @@ namespace ims.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
 
             app.UseAuthentication();
 
