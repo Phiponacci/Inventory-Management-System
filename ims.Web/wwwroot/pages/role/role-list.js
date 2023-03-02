@@ -70,31 +70,41 @@ $(document).ready(function () {
 
 
 function deleteRow(row, id) {
-	toastr.warning("<button type='button' id='confirm' class='btn btn-sm btn-danger mt-3 m-1'>CONFIRM</button><button type='button' id='cancel' class='btn btn-sm btn-outline-secondary mt-3 m-1'>CANCEL</button>", 'Do you want to Delete this Role?',
-		{
-			closeButton: true,
-			allowHtml: true,
-			timeOut: 0,
-			extendedTimeOut: 0,
-			onShown: function (toast) {
-				$("#confirm").click(function () {
-					$.ajax({
-						url: '/Role/Delete/' + id,
-						type: "POST",
-						async: false,
-						success: function (data) {
-							if (data.IsSucceeded) {
-								const aPos = $('#datatable').dataTable().fnGetPosition(row);
-								$('#datatable').dataTable().fnDeleteRow(aPos);
-								toastr.success(data.UserMessage);
-							}
-							else {
-								toastr.error(data.UserMessage);
-							}
-						}
-					});
-				});
-			}
-		});
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You won't be able to revert this!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				url: '/Role/Delete/' + id,
+				type: "POST",
+				async: false,
+				success: function (data) {
+					if (data.IsSucceeded) {
+						const aPos = $('#datatable').dataTable().fnGetPosition(row);
+						$('#datatable').dataTable().fnDeleteRow(aPos);
+						Swal.fire(
+							'Deleted!',
+							'',
+							'success'
+						)
+					}
+					else {
+						Swal.fire(
+							'Not deleted!',
+							'',
+							'error'
+						)
+					}
+				}
+			});
+
+		}
+	})
 }
 

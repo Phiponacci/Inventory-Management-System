@@ -9,4 +9,5 @@ public interface IUserService : IService<UserDTO>
     ServiceResult<UserDTO> Login(string userName, string password);
 
     public Task<ServiceResult<UserDTO>> GetWithRolesById(int id);
+    public Task<ServiceResult<UserDTO>> GetWithRolesByUsername(string username);
 }

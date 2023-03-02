@@ -43,4 +43,9 @@ public class UserRepository : Repository<ims.Data.Entity.User>, IUserRepository
     {
         return await dbContext.User.Include(user => user.Roles).FirstOrDefaultAsync(x => x.Id == id);
     }
+
+    public async Task<Entity.User> GetWithRolesByUsernameAsync(string username)
+    {
+        return await dbContext.User.Include(user => user.Roles).FirstOrDefaultAsync(x => x.UserName == username);
+    }
 }

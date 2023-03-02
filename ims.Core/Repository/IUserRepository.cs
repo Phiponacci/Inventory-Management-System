@@ -10,5 +10,6 @@ namespace ims.Core.Repository
         User Login(string username, string password);
 
         Task<User> GetWithRolesByIdAsync(int id);
+        Task<User> GetWithRolesByUsernameAsync(string username);
     }
 }

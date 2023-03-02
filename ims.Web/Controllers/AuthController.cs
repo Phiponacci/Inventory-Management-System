@@ -45,6 +45,7 @@ public class AuthController : Controller
                     .Permissions
                     .Select(p => new Claim(PermissionClaimType.Permission, $"{PermissionClaimType.Permission}.{p}"))
                     .Append(new Claim(ClaimTypes.Name, model.UserName))
+                    .Append(new Claim(ClaimTypes.NameIdentifier, model.Id.ToString()))
                     .ToList();
                 claims.AddRange(result.TransactionResult.Roles.Select(r => new Claim(ClaimTypes.Role, r.RoleName)));
                 var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -1,0 +1,56 @@
+﻿@model ims.Model.ViewModel.User.ListUserViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<section class="content pt-2">
+    <div class="container-fluid ">
+        <div class="row ">
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">My Profile</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <label class="col">User name</label>
+                            <div class="col">@Model.UserName</div>
+                        </div>
+                        <hr />
+
+                        <div class="row">
+                            <label class="col">First name</label>
+                            <div class="col">@Model.FirstName</div>
+                        </div>
+
+                        <hr />
+                        <div class="row">
+                            <label class="col">Last name</label>
+                            <div class="col">@Model.LastName</div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <label class="col">Phone number</label>
+                            <div class="col">@Model.PhoneNumber</div>
+                        </div>
+
+                        <hr />
+                        <div class="row">
+                            <label class="col">Email</label>
+                            <div class="col">@Model.Email</div>
+                        </div>
+
+                        <hr />
+                        <div class="row">
+                            <label class="col">Roles</label>
+                            <div class="col">@Model.Roles</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

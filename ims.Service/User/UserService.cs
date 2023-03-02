@@ -157,6 +157,25 @@ public class UserService : BaseService, IUserService
         return result;
     }
 
+    public async Task<ServiceResult<UserDTO>> GetWithRolesByUsername(string username)
+    {
+        ServiceResult<UserDTO> result = new ServiceResult<UserDTO>();
+        try
+        {
+            using (_unitOfWork)
+            {
+                Entity.User entity = await _unitOfWork.UserRepository.GetWithRolesByUsernameAsync(username);
+                result.TransactionResult = _mapper.Map<UserDTO>(entity);
+            }
+        }
+        catch (Exception ex)
+        {
+            result.IsSucceeded = false;
+            result.UserMessage = string.Format(CommonMessages.MSG0002, ex.Message);
+        }
+        return result;
+    }
+
     public ServiceResult<UserDTO> Login(string userName, string password)
     {
         ServiceResult<UserDTO> result = new ServiceResult<UserDTO>();
