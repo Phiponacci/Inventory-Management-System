@@ -60,7 +60,7 @@
                 </p>
             </a>
         </li>
-        @if (User.HasPermission(Module.User, Operation.VIEW))
+        @if (User.HasFullAccessTo(Module.User))
         {
             <li class="nav-item">
                 <a href="/User" class="nav-link">

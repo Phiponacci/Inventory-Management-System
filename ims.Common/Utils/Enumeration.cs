@@ -6,7 +6,7 @@ namespace ims.Common.Utils;
 
 public class Enumeration<TEnum> where TEnum : Enumeration<TEnum>
 {
-    public static List<string> GetModules()
+    public static List<string> GetValues()
     {
         var fields = typeof(TEnum).GetFields(BindingFlags.Public | BindingFlags.Static);
         var constFields = fields.Where(f => f.IsLiteral && !f.IsInitOnly);

@@ -9,12 +9,12 @@ namespace ims.Data.Constants;
 
 public static class Permissions
 {
-    public static readonly List<Permission> AllPermissions = Module.GetModules()
+    public static readonly List<Permission> AllPermissions = Module.GetValues()
                                 .SelectMany((module, m) =>
-                                Operation.GetModules().Select((op, o) =>
+                                Operation.GetValues().Select((op, o) =>
                                 new Permission
                                 {
-                                    Id = m * Operation.GetModules().Count + o + 1,
+                                    Id = m * Operation.GetValues().Count + o + 1,
                                     Module = module,
                                     Operation = op
                                 }))
