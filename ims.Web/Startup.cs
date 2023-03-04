@@ -66,10 +66,11 @@ namespace ims.Web
             services.AddScoped<IUnitOfWorks, UnitOfWork.UnitOfWork>();
 
 
-            services.AddLocalization(options => options.ResourcesPath = "/Langs");
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddMvc()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
 
             services.Configure<RequestLocalizationOptions>(options =>
             {

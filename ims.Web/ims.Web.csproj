@@ -19,6 +19,7 @@
     <ProjectReference Include="..\ims.Data\ims.Data.csproj" />
     <ProjectReference Include="..\ims.Mapper\ims.Mapper.csproj" />
     <ProjectReference Include="..\ims.Model\ims.Model.csproj" />
+    <ProjectReference Include="..\ims.Reporting\ims.Reporting.csproj" />
     <ProjectReference Include="..\ims.Service\ims.Service.csproj" />
   </ItemGroup>
 
