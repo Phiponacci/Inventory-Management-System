@@ -289,18 +289,42 @@ namespace ims.Data.Migrations
                 columns: new[] { "Id", "CreateDate", "Module", "Operation" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(4233), "Product", "VIEW" },
-                    { 2, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(6616), "Product", "CREATE" },
-                    { 3, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7400), "Product", "UPDATE" },
-                    { 4, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7434), "Product", "DELETE" },
-                    { 5, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7886), "User", "VIEW" },
-                    { 6, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7933), "User", "CREATE" },
-                    { 7, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(7947), "User", "UPDATE" },
-                    { 8, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8054), "User", "DELETE" },
-                    { 9, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8150), "Client", "VIEW" },
-                    { 10, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8165), "Client", "CREATE" },
-                    { 11, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8179), "Client", "UPDATE" },
-                    { 12, new DateTime(2023, 2, 28, 10, 35, 38, 502, DateTimeKind.Local).AddTicks(8191), "Client", "DELETE" }
+                    { 1, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(2493), "User", "VIEW" },
+                    { 2, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(4057), "User", "CREATE" },
+                    { 3, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(4770), "User", "UPDATE" },
+                    { 4, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(4829), "User", "DELETE" },
+                    { 5, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5244), "Role", "VIEW" },
+                    { 6, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5289), "Role", "CREATE" },
+                    { 7, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5304), "Role", "UPDATE" },
+                    { 8, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5319), "Role", "DELETE" },
+                    { 9, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5392), "Stock", "VIEW" },
+                    { 10, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5408), "Stock", "CREATE" },
+                    { 11, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5422), "Stock", "UPDATE" },
+                    { 12, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5435), "Stock", "DELETE" },
+                    { 13, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5546), "Report", "VIEW" },
+                    { 14, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5563), "Report", "CREATE" },
+                    { 15, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5577), "Report", "UPDATE" },
+                    { 16, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5590), "Report", "DELETE" },
+                    { 17, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5618), "Product", "VIEW" },
+                    { 18, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5632), "Product", "CREATE" },
+                    { 19, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5646), "Product", "UPDATE" },
+                    { 20, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5659), "Product", "DELETE" },
+                    { 21, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5686), "Transaction", "VIEW" },
+                    { 22, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5700), "Transaction", "CREATE" },
+                    { 23, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5713), "Transaction", "UPDATE" },
+                    { 24, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5727), "Transaction", "DELETE" },
+                    { 25, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5829), "Store", "VIEW" },
+                    { 26, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5855), "Store", "CREATE" },
+                    { 27, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5878), "Store", "UPDATE" },
+                    { 28, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5902), "Store", "DELETE" },
+                    { 29, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5955), "Category", "VIEW" },
+                    { 30, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5970), "Category", "CREATE" },
+                    { 31, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5983), "Category", "UPDATE" },
+                    { 32, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(5997), "Category", "DELETE" },
+                    { 33, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(6023), "UnitOfMesure", "VIEW" },
+                    { 34, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(6038), "UnitOfMesure", "CREATE" },
+                    { 35, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(6051), "UnitOfMesure", "UPDATE" },
+                    { 36, new DateTime(2023, 3, 15, 14, 7, 42, 946, DateTimeKind.Local).AddTicks(6073), "UnitOfMesure", "DELETE" }
                 });
 
             migrationBuilder.InsertData(
@@ -308,24 +332,24 @@ namespace ims.Data.Migrations
                 columns: new[] { "Id", "CreateDate", "RoleName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 2, 28, 10, 35, 38, 495, DateTimeKind.Local).AddTicks(7589), "Admin" },
-                    { 2, new DateTime(2023, 2, 28, 10, 35, 38, 497, DateTimeKind.Local).AddTicks(5022), "Accountant" },
-                    { 3, new DateTime(2023, 2, 28, 10, 35, 38, 497, DateTimeKind.Local).AddTicks(5040), "Driver" }
+                    { 1, new DateTime(2023, 3, 15, 14, 7, 42, 909, DateTimeKind.Local).AddTicks(439), "Admin" },
+                    { 2, new DateTime(2023, 3, 15, 14, 7, 42, 910, DateTimeKind.Local).AddTicks(9714), "Accountant" },
+                    { 3, new DateTime(2023, 3, 15, 14, 7, 42, 910, DateTimeKind.Local).AddTicks(9733), "Driver" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Store",
                 columns: new[] { "Id", "CreateDate", "StoreCode", "StoreName" },
-                values: new object[] { 1, new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2855), "EX01", "Example Store" });
+                values: new object[] { 1, new DateTime(2023, 3, 15, 14, 7, 43, 388, DateTimeKind.Local).AddTicks(7924), "EX01", "Example Store" });
 
             migrationBuilder.InsertData(
                 table: "TransactionType",
                 columns: new[] { "Id", "CreateDate", "TransactionTypeName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2528), "Stock Receipt" },
-                    { 2, new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2532), "Stock Out" },
-                    { 3, new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2534), "Transfer" }
+                    { 1, new DateTime(2023, 3, 15, 14, 7, 43, 388, DateTimeKind.Local).AddTicks(7717), "Stock Receipt" },
+                    { 2, new DateTime(2023, 3, 15, 14, 7, 43, 388, DateTimeKind.Local).AddTicks(7719), "Stock Out" },
+                    { 3, new DateTime(2023, 3, 15, 14, 7, 43, 388, DateTimeKind.Local).AddTicks(7721), "Transfer" }
                 });
 
             migrationBuilder.InsertData(
@@ -333,20 +357,20 @@ namespace ims.Data.Migrations
                 columns: new[] { "Id", "CreateDate", "Isocode", "UnitOfMeasureName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2693), "pc", "Piece" },
-                    { 2, new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2705), "kg", "Kilogram" },
-                    { 3, new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(2711), "m", "Meter" }
+                    { 1, new DateTime(2023, 3, 15, 14, 7, 43, 388, DateTimeKind.Local).AddTicks(7820), "pc", "Piece" },
+                    { 2, new DateTime(2023, 3, 15, 14, 7, 43, 388, DateTimeKind.Local).AddTicks(7828), "kg", "Kilogram" },
+                    { 3, new DateTime(2023, 3, 15, 14, 7, 43, 388, DateTimeKind.Local).AddTicks(7833), "m", "Meter" }
                 });
 
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "CreateDate", "Email", "FirstName", "LastName", "Password", "PhoneNumber", "UserName" },
-                values: new object[] { 1, new DateTime(2023, 2, 28, 10, 35, 38, 504, DateTimeKind.Local).AddTicks(1084), null, null, null, "1b2ebfa84ad4d06eed294bc9b79c51cbab7c1e203a39b86395d4f5ac28807a00", null, "Admin" });
+                values: new object[] { 1, new DateTime(2023, 3, 15, 14, 7, 42, 948, DateTimeKind.Local).AddTicks(8111), null, null, null, "1b2ebfa84ad4d06eed294bc9b79c51cbab7c1e203a39b86395d4f5ac28807a00", null, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Product",
                 columns: new[] { "Id", "Barcode", "CategoryId", "CreateDate", "Description", "Image", "Price", "ProductName", "UnitOfMeasureId" },
-                values: new object[] { 1, "EX01", null, new DateTime(2023, 2, 28, 10, 35, 38, 828, DateTimeKind.Local).AddTicks(3055), null, null, 1m, "Example Product", 1 });
+                values: new object[] { 1, "EX01", null, new DateTime(2023, 3, 15, 14, 7, 43, 388, DateTimeKind.Local).AddTicks(8021), null, null, 1m, "Example Product", 1 });
 
             migrationBuilder.InsertData(
                 table: "RolePermission",
@@ -364,7 +388,31 @@ namespace ims.Data.Migrations
                     { 9, 1 },
                     { 10, 1 },
                     { 11, 1 },
-                    { 12, 1 }
+                    { 12, 1 },
+                    { 13, 1 },
+                    { 14, 1 },
+                    { 15, 1 },
+                    { 16, 1 },
+                    { 17, 1 },
+                    { 18, 1 },
+                    { 19, 1 },
+                    { 20, 1 },
+                    { 21, 1 },
+                    { 22, 1 },
+                    { 23, 1 },
+                    { 24, 1 },
+                    { 25, 1 },
+                    { 26, 1 },
+                    { 27, 1 },
+                    { 28, 1 },
+                    { 29, 1 },
+                    { 30, 1 },
+                    { 31, 1 },
+                    { 32, 1 },
+                    { 33, 1 },
+                    { 34, 1 },
+                    { 35, 1 },
+                    { 36, 1 }
                 });
 
             migrationBuilder.InsertData(

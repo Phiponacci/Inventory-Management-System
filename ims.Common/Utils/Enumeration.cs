@@ -10,7 +10,7 @@ public class Enumeration<TEnum> where TEnum : Enumeration<TEnum>
     {
         var fields = typeof(TEnum).GetFields(BindingFlags.Public | BindingFlags.Static);
         var constFields = fields.Where(f => f.IsLiteral && !f.IsInitOnly);
-        var modules = constFields.Select(f => f.GetValue(null)).OfType<string>().ToList();
-        return modules;
+        var members = constFields.Select(f => f.GetValue(null)).OfType<string>().ToList();
+        return members;
     }
 }

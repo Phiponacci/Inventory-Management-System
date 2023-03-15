@@ -12,6 +12,9 @@ using ims.Model.ViewModel.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ims.Service.Store;
+using ims.Security.Attributes;
+using ims.Common.Enums;
+using ims.Security.Enums;
 
 namespace ims.Web.Controllers;
 
@@ -30,17 +33,20 @@ public class UserController : Controller
         _mapper = mapper;
     }
 
+    [HasPermission(module: Module.User, operation: Operation.VIEW)]
     public IActionResult Index()
     {
         return View();
     }
 
+    [HasPermission(module: Module.User, operation: Operation.CREATE)]
     public IActionResult Create()
     {
         return View();
     }
 
     [HttpPost]
+    [HasPermission(module: Module.User, operation: Operation.CREATE)]
     [ValidateAntiForgeryToken()]
     public async Task<IActionResult> Create(CreateUserViewModel model)
     {
@@ -59,6 +65,7 @@ public class UserController : Controller
         return Json(jsonResultModel);
     }
 
+    [HasPermission(module: Module.User, operation: Operation.VIEW)]
     private async Task<IEnumerable<SelectListItem>> GetRoleList()
     {
         ServiceResult<IEnumerable<RoleDTO>> serviceResult = await _roleService.GetAll();
@@ -66,7 +73,7 @@ public class UserController : Controller
         return drpRoleList;
     }
 
-    //[HasPermission(Operation.UPDATE, Module.User)]
+    [HasPermission(module: Module.User, operation: Operation.UPDATE)]
     public async Task<IActionResult> Edit(int id)
     {
         var serviceResult = await _userService.GetWithRolesById(id);
@@ -101,6 +108,7 @@ public class UserController : Controller
 
 
     [HttpGet]
+    [HasPermission(module: Module.User, operation: Operation.VIEW)]
     public async Task<IActionResult> List(SearchUserViewModel model)
     {
         JsonDataTableModel jsonDataTableModel = new JsonDataTableModel();
@@ -134,6 +142,7 @@ public class UserController : Controller
     }
 
     [HttpPost]
+    [HasPermission(module: Module.User, operation: Operation.DELETE)]
     public async Task<IActionResult> Delete(int id)
     {
         JsonResultModel jsonResultModel = new JsonResultModel();

@@ -14,6 +14,7 @@ using ims.Model.ViewModel.Transaction;
 using ims.Model.ViewModel.UnitOfMeasure;
 using ims.Model.ViewModel.User;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Linq;
 
 namespace ims.Mapper
@@ -103,7 +104,8 @@ namespace ims.Mapper
                     .ForMember(dm => dm.Text, vm => vm.MapFrom(vmf => !string.IsNullOrEmpty(vmf.Barcode) ? vmf.Barcode + "-" + vmf.ProductName : vmf.ProductName));
 
 
-            CreateMap<CreateTransactionViewModel, TransactionDTO>();
+            CreateMap<CreateTransactionViewModel, TransactionDTO>()
+                .ForMember(dm => dm.TransactionDate, vm => vm.MapFrom(vmf => DateTime.ParseExact(vmf.TransactionDate, "MM/dd/yyyy", null)));
             CreateMap<TransactionDetailViewModel, TransactionDetailDTO>();
             CreateMap<TransactionDetailDTO, TransactionDetailViewModel>();
             CreateMap<SearchTransactionViewModel, TransactionDTO>()
