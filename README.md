@@ -33,3 +33,8 @@ Default admin user<br>
 Login:<br>
 User name: `Admin`<br>
 Password: `Admin$$123`
+
+## Contact
+For more information and custom software solutions, feel free to reach out to me on Fiverr:
+
+[![Fiverr](https://img.shields.io/badge/Fiverr-1DBF73.svg?style=for-the-badge&logo=Fiverr&logoColor=white)](https://www.fiverr.com/phiponatchi)
